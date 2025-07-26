@@ -1,0 +1,297 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Mrigika Boutique Design System - Elegant feminine aesthetic */
+
+@layer base {
+	:root {
+		/* #030303 and #DA285E theme */
+		--background: 0 0% 1%; /* #030303 */
+		--foreground: 60 20% 97%; /* #f8f8f2 */
+
+		--card: 0 0% 13%; /* #222 */
+		--card-foreground: 60 20% 97%; /* #f8f8f2 */
+
+		--popover: 0 0% 13%;
+		--popover-foreground: 60 20% 97%;
+
+		--primary: 336 70% 51%; /* #DA285E */
+		--primary-foreground: 60 20% 97%; /* #f8f8f2 */
+		--primary-glow: 336 70% 60%; /* lighter pink */
+
+		--secondary: 0 0% 13%; /* #222 */
+		--secondary-foreground: 60 20% 97%;
+
+		--muted: 0 0% 13%; /* #222 */
+		--muted-foreground: 0 0% 67%; /* #aaa */
+
+		--accent: 336 70% 51%; /* #DA285E */
+		--accent-foreground: 60 20% 97%;
+		--accent-glow: 336 70% 60%;
+
+		--destructive: 0 84% 60%;
+		--destructive-foreground: 60 20% 97%;
+
+		--border: 0 0% 20%; /* #333 */
+		--input: 0 0% 20%;
+		--ring: 336 70% 51%;
+
+		--gradient-primary: linear-gradient(
+			135deg,
+			hsl(var(--primary)),
+			hsl(var(--primary-glow))
+		);
+		--gradient-secondary: linear-gradient(
+			135deg,
+			hsl(var(--secondary)),
+			hsl(var(--muted))
+		);
+		--gradient-accent: linear-gradient(
+			135deg,
+			hsl(var(--accent)),
+			hsl(var(--accent-glow))
+		);
+		--gradient-hero: linear-gradient(
+			135deg,
+			hsl(var(--primary) / 0.95),
+			hsl(var(--accent) / 0.9)
+		);
+
+		--shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.2);
+		--shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.3);
+		--shadow-soft: 0 4px 20px -5px hsl(var(--foreground) / 0.1);
+
+		--transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		--transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+		--radius: 0.75rem;
+
+		--sidebar-background: 0 0% 13%;
+		--sidebar-foreground: 60 20% 97%;
+		--sidebar-primary: 0 0% 1%;
+		--sidebar-primary-foreground: 60 20% 97%;
+		--sidebar-accent: 336 70% 51%;
+		--sidebar-accent-foreground: 60 20% 97%;
+		--sidebar-border: 0 0% 20%;
+		--sidebar-ring: 336 70% 51%;
+	}
+
+	.dark {
+		--background: 0 0% 1%;
+		--foreground: 60 20% 97%;
+
+		--card: 0 0% 13%;
+		--card-foreground: 60 20% 97%;
+
+		--popover: 0 0% 13%;
+		--popover-foreground: 60 20% 97%;
+
+		--primary: 336 70% 51%;
+		--primary-foreground: 60 20% 97%;
+		--primary-glow: 336 70% 60%;
+
+		--secondary: 0 0% 13%;
+		--secondary-foreground: 60 20% 97%;
+
+		--muted: 0 0% 13%;
+		--muted-foreground: 0 0% 67%;
+
+		--accent: 336 70% 51%;
+		--accent-foreground: 60 20% 97%;
+		--accent-glow: 336 70% 60%;
+
+		--destructive: 0 84% 60%;
+		--destructive-foreground: 60 20% 97%;
+
+		--border: 0 0% 20%;
+		--input: 0 0% 20%;
+		--ring: 336 70% 51%;
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+
+	body {
+		@apply bg-background text-foreground font-poppins;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply font-playfair;
+	}
+}
+
+@layer components {
+	/* Boutique button variants */
+	.btn-boutique {
+		@apply bg-gradient-to-r from-primary to-primary-glow text-primary-foreground 
+           px-8 py-3 rounded-full font-medium shadow-elegant 
+           hover:shadow-glow transform hover:scale-105 
+           transition-all duration-300 ease-out;
+	}
+
+	.btn-accent {
+		@apply bg-gradient-to-r from-accent to-accent-glow text-accent-foreground 
+           px-8 py-3 rounded-full font-medium shadow-elegant 
+           hover:shadow-glow transform hover:scale-105 
+           transition-all duration-300 ease-out;
+	}
+
+	.btn-secondary {
+		@apply bg-secondary text-secondary-foreground border border-border
+           px-8 py-3 rounded-full font-medium shadow-soft
+           hover:bg-muted transform hover:scale-105
+           transition-all duration-300 ease-out;
+	}
+
+	/* Product cards */
+	.product-card {
+		@apply bg-card border border-border rounded-2xl p-6 shadow-soft
+           hover:shadow-elegant transform hover:scale-105 hover:-translate-y-2
+           transition-all duration-500 ease-out;
+	}
+
+	/* Elegant animations */
+	.float-animation {
+		animation: float 6s ease-in-out infinite;
+	}
+
+	.fade-in-up {
+		animation: fadeInUp 0.8s ease-out forwards;
+	}
+
+	.gradient-text {
+		@apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+	}
+}
+
+@layer utilities {
+	.shadow-elegant {
+		box-shadow: var(--shadow-elegant);
+	}
+
+	.shadow-glow {
+		box-shadow: var(--shadow-glow);
+	}
+
+	.shadow-soft {
+		box-shadow: var(--shadow-soft);
+	}
+
+	.transition-smooth {
+		transition: var(--transition-smooth);
+	}
+
+	.transition-bounce {
+		transition: var(--transition-bounce);
+	}
+}
+
+@keyframes float {
+	0%,
+	100% {
+		transform: translateY(0px);
+	}
+	50% {
+		transform: translateY(-20px);
+	}
+}
+
+@keyframes fadeInUp {
+	0% {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* OfferPage Animations */
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@keyframes pop {
+	0% {
+		transform: scale(0.8);
+		opacity: 0;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+@keyframes slide-in-left {
+	from {
+		transform: translateX(-50px);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+@keyframes slide-in-right {
+	from {
+		transform: translateX(50px);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+@keyframes slide-in-up {
+	from {
+		transform: translateY(50px);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+@keyframes bounce-slow {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-20px);
+	}
+}
+
+.animate-fade-in {
+	animation: fade-in 1s both;
+}
+.animate-pop {
+	animation: pop 0.6s both;
+}
+.animate-slide-in-left {
+	animation: slide-in-left 1s both;
+}
+.animate-slide-in-right {
+	animation: slide-in-right 1s both;
+}
+.animate-slide-in-up {
+	animation: slide-in-up 1s both;
+}
+.animate-bounce-slow {
+	animation: bounce-slow 2.5s infinite;
+}
