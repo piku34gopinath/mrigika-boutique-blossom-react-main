@@ -11,7 +11,7 @@ import {
 	CarouselPrevious,
 	CarouselNext,
 } from "../components/ui/carousel";
-import sareeImg from "../assets/saree/cookiesSaree1.JPG";
+import sareeImg from "../assets/saree/cookiesSaree1.jpg";
 import lehengaImg from "../assets/saree/saree2.jpg";
 import customizedImg from "../assets/saree/saree3.jpg";
 import kidsImg from "../assets/jewelry-product.jpg";
