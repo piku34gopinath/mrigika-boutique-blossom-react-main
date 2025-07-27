@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { ShoppingBag, Menu, X, Instagram, Heart } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { ShoppingBag, Menu, X, Instagram, Heart, User } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
 interface NavigationProps {
 	cartItemsCount: number;
@@ -17,11 +18,26 @@ const Navigation: React.FC<NavigationProps> = ({
 	showOfferButton = false,
 }) => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const storedUser = localStorage.getItem("user");
+		setIsLoggedIn(!!storedUser);
+	}, []);
+
+	const handleProfileClick = () => {
+		if (isLoggedIn) {
+			navigate("/profile");
+		} else {
+			navigate("/signin");
+		}
+	};
 
 	const navigationItems = [
-		{ id: "home", label: "Home" },
-		{ id: "shop", label: "Shop" },
-		{ id: "contact", label: "Contact" },
+		{ id: "home", label: "Home", path: "/" },
+		{ id: "shop", label: "Shop", path: "/shop" },
+		{ id: "contact", label: "Contact", path: "/contact" },
 	];
 
 	return (
@@ -29,24 +45,21 @@ const Navigation: React.FC<NavigationProps> = ({
 			<div className="container mx-auto px-6">
 				<div className="flex items-center justify-between h-20">
 					{/* Logo */}
-					<div
-						className="flex items-center space-x-3 cursor-pointer select-none group"
-						onClick={() => onPageChange("home")}
-					>
+					<Link to="/" className="flex items-center space-x-3 cursor-pointer select-none group">
 						<span className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-primary to-secondary shadow-md group-hover:scale-105 transition-transform">
 							<Heart className="h-7 w-7 text-white" />
 						</span>
 						<span className="text-3xl font-extrabold font-playfair gradient-text bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent tracking-wide">
 							Mrigika
 						</span>
-					</div>
+					</Link>
 
 					{/* Desktop Navigation */}
 					<div className="hidden md:flex items-center space-x-10">
 						{navigationItems.map((item) => (
-							<button
+							<Link
 								key={item.id}
-								onClick={() => onPageChange(item.id)}
+								to={item.path}
 								className={`font-medium text-lg px-3 py-1 rounded transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/40 hover:scale-105 hover:shadow-md
                   ${
 										currentPage === item.id
@@ -56,11 +69,11 @@ const Navigation: React.FC<NavigationProps> = ({
                 `}
 							>
 								{item.label}
-							</button>
+							</Link>
 						))}
 						{showOfferButton && (
-							<button
-								onClick={() => onPageChange("offer")}
+							<Link
+								to="/offer"
 								className={`font-semibold text-lg px-4 py-1 rounded-full bg-gradient-to-r from-primary to-secondary text-white shadow hover:shadow-lg transition-all duration-300 ml-2 hover:scale-105 hover:shadow-xl
                   ${
 										currentPage === "offer"
@@ -70,7 +83,7 @@ const Navigation: React.FC<NavigationProps> = ({
                 `}
 							>
 								Offers
-							</button>
+							</Link>
 						)}
 					</div>
 
@@ -86,8 +99,8 @@ const Navigation: React.FC<NavigationProps> = ({
 						</a>
 
 						{/* Favorite button */}
-						<button
-							onClick={() => onPageChange("favorites")}
+						<Link
+							to="/favorites"
 							className={`relative p-2 text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 hover:shadow-md rounded-full
                 ${
 									currentPage === "favorites"
@@ -102,10 +115,10 @@ const Navigation: React.FC<NavigationProps> = ({
 									{favoritesCount}
 								</span>
 							)}
-						</button>
+						</Link>
 
-						<button
-							onClick={() => onPageChange("cart")}
+						<Link
+							to="/cart"
 							className={`relative p-2 text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 hover:shadow-md rounded-full
                 ${
 									currentPage === "cart"
@@ -120,6 +133,17 @@ const Navigation: React.FC<NavigationProps> = ({
 									{cartItemsCount}
 								</span>
 							)}
+						</Link>
+
+						<button
+							onClick={handleProfileClick}
+							className={`relative p-2 text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 hover:shadow-md rounded-full ${
+								currentPage === "profile" || currentPage === "signin"
+									? "text-primary scale-110 shadow-lg"
+									: ""
+							}`}
+						>
+							<User className="h-6 w-6" />
 						</button>
 
 						{/* Mobile menu button */}
@@ -140,12 +164,10 @@ const Navigation: React.FC<NavigationProps> = ({
 				{isMobileMenuOpen && (
 					<div className="md:hidden py-4 border-t border-border bg-background/90 backdrop-blur-lg shadow-lg rounded-b-xl animate-slide-in-up">
 						{navigationItems.map((item) => (
-							<button
+							<Link
 								key={item.id}
-								onClick={() => {
-									onPageChange(item.id);
-									setIsMobileMenuOpen(false);
-								}}
+								to={item.path}
+								onClick={() => setIsMobileMenuOpen(false)}
 								className={`block w-full text-left py-3 px-6 font-medium text-lg rounded transition-all duration-300 hover:scale-105 hover:shadow-md
                   ${
 										currentPage === item.id
@@ -155,14 +177,12 @@ const Navigation: React.FC<NavigationProps> = ({
                 `}
 							>
 								{item.label}
-							</button>
+							</Link>
 						))}
 						{showOfferButton && (
-							<button
-								onClick={() => {
-									onPageChange("offer");
-									setIsMobileMenuOpen(false);
-								}}
+							<Link
+								to="/offer"
+								onClick={() => setIsMobileMenuOpen(false)}
 								className={`block w-full text-left py-3 px-6 font-semibold text-lg rounded-full bg-gradient-to-r from-primary to-secondary text-white shadow hover:shadow-lg transition-all duration-300 mt-2 hover:scale-105 hover:shadow-xl
                   ${
 										currentPage === "offer"
@@ -172,13 +192,11 @@ const Navigation: React.FC<NavigationProps> = ({
                 `}
 							>
 								Offers
-							</button>
+							</Link>
 						)}
-						<button
-							onClick={() => {
-								onPageChange("favorites");
-								setIsMobileMenuOpen(false);
-							}}
+						<Link
+							to="/favorites"
+							onClick={() => setIsMobileMenuOpen(false)}
 							className={`block w-full text-left py-3 px-6 font-medium text-lg rounded transition-all duration-300 hover:scale-105 hover:shadow-md
                 ${
 									currentPage === "favorites"
@@ -188,12 +206,10 @@ const Navigation: React.FC<NavigationProps> = ({
               `}
 						>
 							Favorites
-						</button>
-						<button
-							onClick={() => {
-								onPageChange("cart");
-								setIsMobileMenuOpen(false);
-							}}
+						</Link>
+						<Link
+							to="/cart"
+							onClick={() => setIsMobileMenuOpen(false)}
 							className={`block w-full text-left py-3 px-6 font-medium text-lg rounded transition-all duration-300 hover:scale-105 hover:shadow-md
                 ${
 									currentPage === "cart"
@@ -203,6 +219,19 @@ const Navigation: React.FC<NavigationProps> = ({
               `}
 						>
 							Cart
+						</Link>
+						<button
+							onClick={() => {
+								handleProfileClick();
+								setIsMobileMenuOpen(false);
+							}}
+							className={`block w-full text-left py-3 px-6 font-medium text-lg rounded transition-all duration-300 hover:scale-105 hover:shadow-md ${
+								currentPage === "profile" || currentPage === "signin"
+									? "text-primary bg-primary/10 shadow-lg scale-105"
+									: "text-muted-foreground hover:text-primary hover:bg-primary/5"
+							}`}
+						>
+							{isLoggedIn ? "Profile" : "Sign In"}
 						</button>
 					</div>
 				)}

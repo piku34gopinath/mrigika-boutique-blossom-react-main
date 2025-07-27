@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import Hero from "../components/Hero";
 import VideoSection from "../components/VideoSection";
 import ProductCard from "../components/ProductCard";
 import { Product } from "../types";
-import { Star, Truck, Shield, RefreshCw, Sun, Moon } from "lucide-react";
+import { Star, Truck, Shield, RefreshCw } from "lucide-react";
 import {
 	Carousel,
 	CarouselContent,
@@ -24,24 +25,27 @@ interface HomePageProps {
 		customized: Product[];
 		kids: Product[];
 	};
+	onViewProduct: (product: Product) => void;
 	onAddToCart: (product: Product) => void;
 	onViewProduct: (product: Product) => void;
 	onShopNow: () => void;
 	onCategoryFilter: (category: string) => void;
 	onToggleFavorite: (product: Product) => void;
 	favorites: Product[];
+	onCategoryFilter: (category: string) => void;
 }
 
 const HomePage: React.FC<HomePageProps> = ({
 	featuredProducts,
 	productsByCategory,
-	onAddToCart,
 	onViewProduct,
-	onShopNow,
-	onCategoryFilter,
+	onAddToCart,
 	onToggleFavorite,
 	favorites,
+	onCategoryFilter,
 }) => {
+	const navigate = useNavigate();
+
 	const features = [
 		{
 			icon: <Truck className="h-8 w-8 text-primary" />,
@@ -97,16 +101,18 @@ const HomePage: React.FC<HomePageProps> = ({
 
 	const handleViewCategory = (categoryKey: string) => {
 		onCategoryFilter(categoryKey);
-		onShopNow();
+		navigate("/shop");
 	};
 
-	// REMOVE: isDark state, useEffect, and toggleTheme function
+	const handleViewProduct = (product: Product) => {
+		navigate(`/product/${product.id}`);
+	};
 
 	return (
 		<div className="min-h-screen">
 			{/* Hero Section */}
 			<div className="fade-in scale-up animate-hero">
-				<Hero onShopNow={onShopNow} />
+				<Hero onShopNow={() => navigate("/shop")} />
 			</div>
 
 			{/* Video Section */}
@@ -189,45 +195,6 @@ const HomePage: React.FC<HomePageProps> = ({
 							<CarouselNext />
 						</Carousel>
 					</div>
-
-					{/* Individual Category Sections */}
-					{/* {categories.map((category) => (
-						<div key={category.key} className="mb-16 fade-in slide-up">
-							<div className="flex items-center justify-between mb-8">
-								<div>
-									<h3 className="text-3xl font-playfair font-semibold text-primary mb-2">
-										{category.name}
-									</h3>
-									<p className="text-muted-foreground">
-										{category.description}
-									</p>
-								</div>
-								<button
-									onClick={() => handleViewCategory(category.key)}
-									className="btn-secondary"
-								>
-									View All
-								</button>
-							</div>
-
-							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-								{productsByCategory[
-									category.key as keyof typeof productsByCategory
-								]
-									?.slice(0, 4)
-									.map((product) => (
-										<ProductCard
-											key={product.id}
-											product={product}
-											onAddToCart={onAddToCart}
-											onViewProduct={onViewProduct}
-											isFavorite={favorites?.some((fav) => fav.id === product.id)}
-											onToggleFavorite={onToggleFavorite}
-										/>
-									))}
-							</div>
-						</div>
-					))} */}
 				</div>
 			</section>
 
@@ -243,7 +210,6 @@ const HomePage: React.FC<HomePageProps> = ({
 							latest collection
 						</p>
 					</div>
-
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
 						{featuredProducts.map((product) => (
 							<ProductCard
@@ -258,7 +224,7 @@ const HomePage: React.FC<HomePageProps> = ({
 					</div>
 
 					<div className="text-center">
-						<button onClick={onShopNow} className="btn-boutique">
+						<button onClick={() => navigate("/shop")} className="btn-boutique">
 							View All Products
 						</button>
 					</div>

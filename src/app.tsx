@@ -3,7 +3,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { Sun, Moon } from "lucide-react";
 import SignInPage from "./pages/SignInPage";
@@ -15,10 +16,9 @@ import CheckoutPage from "./pages/CheckoutPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import OfferPage from "./pages/OfferPage";
-import HomePage from "./pages/HomePage";
 import { products } from "./data/products";
 import { toast } from "./hooks/use-toast";
-import Navigation from "./components/Navigation";
+import Layout from "./components/Layout";
 
 const queryClient = new QueryClient();
 
@@ -29,7 +29,6 @@ const App = () => {
 		const stored = localStorage.getItem("favorites");
 		return stored ? JSON.parse(stored) : [];
 	});
-	const [filteredCategory, setFilteredCategory] = useState(null);
 
 	useEffect(() => {
 		localStorage.setItem("favorites", JSON.stringify(favorites));
@@ -145,100 +144,6 @@ const App = () => {
 		}
 	};
 
-	const featuredProducts = products.filter((p) => p.isFeatured);
-	const productsByCategory = {
-		sarees: products.filter((p) => p.category === "Saree"),
-		lehengas: products.filter((p) => p.category === "Lehenga"),
-		customized: products.filter((p) => p.category === "Customized"),
-		kids: products.filter((p) => p.category === "Kids"),
-	};
-
-	const Main = () => {
-		const location = useLocation();
-		const getPageFromPath = (path) => {
-			if (path === "/") return "home";
-			const page = path.substring(1);
-			if (page.startsWith("product/")) return "productDetail";
-			return page;
-		};
-
-		return (
-			<>
-				<Navigation
-					cartItemsCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-					favoritesCount={favorites.length}
-					currentPage={getPageFromPath(location.pathname)}
-					showOfferButton={true}
-				/>
-				<Routes>
-					<Route
-						path="/"
-						element={
-							<HomePage
-								featuredProducts={featuredProducts}
-								productsByCategory={productsByCategory}
-								onAddToCart={handleAddToCart}
-								favorites={favorites}
-								onToggleFavorite={toggleFavorite}
-								onCategoryFilter={setFilteredCategory}
-							/>
-						}
-					/>
-					<Route path="/signin" element={<SignInPage />} />
-					<Route path="/profile" element={<ProfilePage />} />
-					<Route
-						path="/shop"
-						element={
-							<ShopPage
-								products={products}
-								onAddToCart={handleAddToCart}
-								favorites={favorites}
-								onToggleFavorite={toggleFavorite}
-								initialCategory={filteredCategory}
-							/>
-						}
-					/>
-					<Route path="/contact" element={<ContactPage />} />
-					<Route
-						path="/cart"
-						element={
-							<CartPage
-								cartItems={cartItems}
-								onUpdateQuantity={handleUpdateQuantity}
-								onRemoveItem={handleRemoveItem}
-							/>
-						}
-					/>
-					<Route
-						path="/checkout"
-						element={<CheckoutPage cartItems={cartItems} />}
-					/>
-					<Route
-						path="/product/:id"
-						element={
-							<ProductDetailPage
-								onAddToCart={handleAddToCart}
-								onToggleFavorite={toggleFavorite}
-								isFavorite={isFavorite}
-							/>
-						}
-					/>
-					<Route
-						path="/favorites"
-						element={
-							<FavoritesPage
-								favorites={favorites}
-								onRemoveFavorite={removeFromFavorites}
-							/>
-						}
-					/>
-					<Route path="/offer" element={<OfferPage />} />
-					<Route path="*" element={<NotFound />} />
-				</Routes>
-			</>
-		);
-	};
-
 	return (
 		<QueryClientProvider client={queryClient}>
 			<TooltipProvider>
@@ -252,7 +157,60 @@ const App = () => {
 					{isDark ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />}
 				</button>
 				<BrowserRouter>
-					<Main />
+					<Layout
+						cartItemsCount={cartItems.reduce(
+							(sum, item) => sum + item.quantity,
+							0
+						)}
+						favoritesCount={favorites.length}
+					>
+						<Routes>
+							<Route path="/" element={<Index />} />
+							<Route path="/signin" element={<SignInPage />} />
+							<Route path="/profile" element={<ProfilePage />} />
+							<Route
+								path="/shop"
+								element={
+									<ShopPage
+										products={products}
+										onAddToCart={handleAddToCart}
+										favorites={favorites}
+										onToggleFavorite={toggleFavorite}
+									/>
+								}
+							/>
+							<Route path="/contact" element={<ContactPage />} />
+							<Route
+								path="/cart"
+								element={
+									<CartPage
+										cartItems={cartItems}
+										onUpdateQuantity={handleUpdateQuantity}
+										onRemoveItem={handleRemoveItem}
+									/>
+								}
+							/>
+							<Route
+								path="/checkout"
+								element={<CheckoutPage cartItems={cartItems} />}
+							/>
+							<Route
+								path="/product/:id"
+								element={<ProductDetailPage onAddToCart={handleAddToCart} />}
+							/>
+							<Route
+								path="/favorites"
+								element={
+									<FavoritesPage
+										favorites={favorites}
+										onRemoveFavorite={removeFromFavorites}
+									/>
+								}
+							/>
+							<Route path="/offer" element={<OfferPage />} />
+							<Route path="*" element={<NotFound />} />
+						</Routes>
+					</Layout>
 				</BrowserRouter>
 			</TooltipProvider>
 		</QueryClientProvider>

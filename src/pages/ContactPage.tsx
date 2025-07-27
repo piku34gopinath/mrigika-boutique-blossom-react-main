@@ -238,7 +238,7 @@ const ContactPage: React.FC = () => {
 								<div className="lg:col-span-2">
 									<div className="relative h-96 rounded-xl overflow-hidden shadow-lg">
 										<iframe
-											src="https://maps.app.goo.gl/DaY1dWye5skVc6677"
+											src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3742.662194994264!2d85.83869687593635!3d20.24424781827484!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a19a7a2e19c6b23%3A0xea8681e06c68a3ff!2sMrigika!5e0!3m2!1sen!2sin!4v1689584210986!5m2!1sen!2sin"
 											width="100%"
 											height="100%"
 											style={{ border: 0 }}
