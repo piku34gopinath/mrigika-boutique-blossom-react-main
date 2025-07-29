@@ -19,8 +19,14 @@ const VideoSection: React.FC = () => {
 		{
 			title: "Finished Handloom Products",
 			description: "Showcasing the beauty of completed sarees",
-			src: "/src/assets/video/video4.MP4",
-			objectFit: "object-contain",
+			src: "/src/assets/video/video3.MP4",
+			objectFit: "object-cover",
+		},
+		{
+			title: "Finished Handloom Products",
+			description: "Showcasing the beauty of completed sarees",
+			src: "/src/assets/video/video6.MP4",
+			objectFit: "object-cover",
 		},
 	];
 

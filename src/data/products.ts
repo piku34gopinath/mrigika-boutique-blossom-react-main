@@ -2,6 +2,7 @@ import { Product } from '../types';
 import sareeImage from '../assets/saree-product.jpg';
 import kurtiImage from '../assets/kurti-product.jpg';
 import jewelryImage from '../assets/jewelry-product.jpg';
+import cookiesSaree from '../assets/saree/cookiesSaree1.jpg'
 
 export const products: Product[] = [
   // Saree Section (6 products)
@@ -10,7 +11,7 @@ export const products: Product[] = [
     name: 'Odisha Silk Saree',
     price: 4999,
     description: 'Handwoven silk saree with traditional Odisha motifs, showcasing the rich heritage of our craftsmen.',
-    image: sareeImage,
+    image: cookiesSaree,
     category: 'sarees',
     sizes: ['Free Size'],
     colors: ['Royal Blue', 'Emerald Green', 'Deep Purple'],

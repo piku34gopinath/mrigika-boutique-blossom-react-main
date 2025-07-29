@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import { Product } from "../types";
 import { Filter, SlidersHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface ShopPageProps {
 	products: Product[];
@@ -20,15 +21,24 @@ const ShopPage: React.FC<ShopPageProps> = ({
 	favorites,
 	onToggleFavorite,
 }) => {
-	const [selectedCategory, setSelectedCategory] = useState<string>("all");
+	const [selectedCategory, setSelectedCategory] = useState<string>(
+		initialCategory || "all"
+	);
 	const [priceRange, setPriceRange] = useState<string>("all");
 	const [sortBy, setSortBy] = useState<string>("featured");
 	const [showFilters, setShowFilters] = useState(false);
+
+	useEffect(() => {
+		if (initialCategory) {
+			setSelectedCategory(initialCategory);
+		}
+	}, [initialCategory]);
 
 	const categories = [
 		{ id: "all", label: "All Products" },
 		{ id: "sarees", label: "Sarees" },
 		{ id: "kurtis", label: "Kurtis" },
+		{ id: "lehengas", label: "Lehengas" },
 		{ id: "accessories", label: "Accessories" },
 	];
 
@@ -108,6 +118,20 @@ const ShopPage: React.FC<ShopPageProps> = ({
 					</p>
 				</div>
 
+				{/* Category Buttons */}
+				<div className="flex flex-wrap justify-center gap-4 mb-8">
+					{categories.map((category) => (
+						<Button
+							key={category.id}
+							variant={selectedCategory === category.id ? "default" : "outline"}
+							onClick={() => setSelectedCategory(category.id)}
+							className="rounded-full"
+						>
+							{category.label}
+						</Button>
+					))}
+				</div>
+
 				{/* Filters and Sort */}
 				<div className="mb-8">
 					<div className="flex flex-col lg:flex-row gap-4 justify-between items-start lg:items-center">
@@ -126,24 +150,6 @@ const ShopPage: React.FC<ShopPageProps> = ({
 								showFilters ? "block" : "hidden"
 							} lg:flex flex-wrap gap-4 w-full lg:w-auto`}
 						>
-							{/* Category Filter */}
-							<div className="space-y-2">
-								<label className="text-sm font-medium text-muted-foreground">
-									Category
-								</label>
-								<select
-									value={selectedCategory}
-									onChange={(e) => setSelectedCategory(e.target.value)}
-									className="px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent"
-								>
-									{categories.map((category) => (
-										<option key={category.id} value={category.id}>
-											{category.label}
-										</option>
-									))}
-								</select>
-							</div>
-
 							{/* Price Filter */}
 							<div className="space-y-2">
 								<label className="text-sm font-medium text-muted-foreground">
@@ -195,14 +201,19 @@ const ShopPage: React.FC<ShopPageProps> = ({
 				{filteredAndSortedProducts.length > 0 ? (
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
 						{filteredAndSortedProducts.map((product) => (
-							<ProductCard
+							<div
 								key={product.id}
-								product={product}
-								onAddToCart={onAddToCart}
-								onViewProduct={onViewProduct}
-								isFavorite={favorites?.some((fav) => fav.id === product.id)}
-								onToggleFavorite={onToggleFavorite}
-							/>
+								className="cursor-pointer"
+								onClick={() => onViewProduct(product)}
+							>
+								<ProductCard
+									product={product}
+									onAddToCart={onAddToCart}
+									onViewProduct={onViewProduct}
+									isFavorite={favorites?.some((fav) => fav.id === product.id)}
+									onToggleFavorite={onToggleFavorite}
+								/>
+							</div>
 						))}
 					</div>
 				) : (

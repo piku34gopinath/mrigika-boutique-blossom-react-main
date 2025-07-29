@@ -27,11 +27,11 @@ const ProfilePage = () => {
 
 	return (
 		<div>
-			<Navigation
+			{/* <Navigation
 				cartItemsCount={0}
 				currentPage="profile"
 				onPageChange={(page) => navigate(page === "home" ? "/" : `/${page}`)}
-			/>
+			/> */}
 			<div className="flex items-center justify-center min-h-screen bg-background">
 				<div className="w-full max-w-md p-8 space-y-6 bg-card rounded-2xl shadow-soft">
 					<h1 className="text-3xl font-bold text-center">Profile</h1>

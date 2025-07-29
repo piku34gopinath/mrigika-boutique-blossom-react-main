@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CartItem } from '../types';
 import { Plus, Minus, Trash2, ShoppingBag, ArrowLeft } from 'lucide-react';
 
@@ -6,19 +7,24 @@ interface CartPageProps {
   cartItems: CartItem[];
   onUpdateQuantity: (productId: string, quantity: number) => void;
   onRemoveItem: (productId: string) => void;
-  onGoToShop: () => void;
-  onCheckout: () => void;
 }
 
 const CartPage: React.FC<CartPageProps> = ({
   cartItems,
   onUpdateQuantity,
   onRemoveItem,
-  onGoToShop,
-  onCheckout,
 }) => {
+  const navigate = useNavigate();
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  const handleGoToShop = () => {
+    navigate('/shop');
+  };
+
+  const handleCheckout = () => {
+    navigate('/checkout');
+  };
 
   if (cartItems.length === 0) {
     return (
@@ -30,7 +36,7 @@ const CartPage: React.FC<CartPageProps> = ({
             <p className="text-muted-foreground mb-8">
               Looks like you haven't added anything to your cart yet. Start shopping to fill it up!
             </p>
-            <button onClick={onGoToShop} className="btn-boutique">
+            <button onClick={handleGoToShop} className="btn-boutique">
               Continue Shopping
             </button>
           </div>
@@ -45,7 +51,7 @@ const CartPage: React.FC<CartPageProps> = ({
         {/* Header */}
         <div className="flex items-center mb-8">
           <button
-            onClick={onGoToShop}
+            onClick={handleGoToShop}
             className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors mr-6"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -178,11 +184,11 @@ const CartPage: React.FC<CartPageProps> = ({
                 </div>
               )}
 
-              <button onClick={onCheckout} className="btn-boutique w-full">
+              <button onClick={handleCheckout} className="btn-boutique w-full">
                 Proceed to Checkout
               </button>
 
-              <button onClick={onGoToShop} className="btn-secondary w-full mt-3">
+              <button onClick={handleGoToShop} className="btn-secondary w-full mt-3">
                 Continue Shopping
               </button>
             </div>
