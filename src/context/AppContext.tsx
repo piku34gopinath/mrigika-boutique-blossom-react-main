@@ -2,10 +2,12 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Product, CartItem } from '../types';
 import { useToast } from '@/hooks/use-toast';
+import { products } from '../data/products'; // Import products
 
 interface AppContextType {
     cartItems: CartItem[];
     favorites: Product[];
+    products: Product[]; // Add products to the context type
     addToCart: (product: Product, quantity?: number, selectedSize?: string, selectedColor?: string) => void;
     removeFromCart: (productId: string) => void;
     updateCartQuantity: (productId: string, quantity: number) => void;
@@ -90,6 +92,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         <AppContext.Provider value={{
             cartItems,
             favorites,
+            products, // Provide products through the context
             addToCart,
             removeFromCart,
             updateCartQuantity,

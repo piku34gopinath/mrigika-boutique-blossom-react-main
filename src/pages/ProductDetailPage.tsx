@@ -2,30 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Product } from '../types';
 import { ArrowLeft, ShoppingCart, Heart, Share2, Star, Truck, Shield, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react';
-import sareeImg from "../assets/saree/cookiesSaree1.jpg";
-import lehengaImg from "../assets/saree/saree2.jpg";
-import customizedImg from "../assets/saree/saree3.jpg";
-import kidsImg from "../assets/jewelry-product.jpg";
-
-const products: Product[] = [
-    // Replace with actual data fetching later
-    { id: '1', name: 'Elegant Saree', price: 1999, image: [sareeImg], category: 'sarees', description: 'A beautiful saree for all occasions.', sizes: ['S', 'M', 'L'], colors: ['Red', 'Blue', 'Green'] },
-    { id: '2', name: 'Designer Lehenga', price: 4999, image: [lehengaImg], category: 'lehengas', description: 'An elegant lehenga for special events.', sizes: ['S', 'M', 'L'], colors: ['Red', 'Blue', 'Green'] },
-    { id: '3', name: 'Customized Gown', price: 7999, image: [customizedImg], category: 'customized', description: 'A gown customized to your preferences.', sizes: ['S', 'M', 'L'], colors: ['Red', 'Blue', 'Green'] },
-    { id: '4', name: 'Kids Ethnic Wear', price: 999, image: [kidsImg], category: 'kids', description: 'Comfortable and stylish ethnic wear for kids.', sizes: ['S', 'M', 'L'], colors: ['Red', 'Blue', 'Green'] },
-    { id: '5', name: 'Handwoven Saree', price: 2499, image: [sareeImg], category: 'sarees', description: 'A traditional handwoven saree.', sizes: ['S', 'M', 'L'], colors: ['Red', 'Blue', 'Green'] },
-    { id: '6', name: 'Embroidered Lehenga', price: 5999, image: [lehengaImg], category: 'lehengas', description: 'A lehenga with intricate embroidery.', sizes: ['S', 'M', 'L'], colors: ['Red', 'Blue', 'Green'] },
-];
+import { useAppContext } from '../context/AppContext';
 
 const ProductDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { products, addToCart, toggleFavorite, isFavorite } = useAppContext(); // Get functions from context
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
+    // Find product from the centralized products array
     const foundProduct = products.find(p => p.id === id);
     setProduct(foundProduct || null);
-  }, [id]);
+  }, [id, products]); // Add products to dependency array
 
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('');
@@ -44,8 +33,8 @@ const ProductDetailPage: React.FC = () => {
   }
 
   const handleAddToCart = () => {
-    // Add to cart logic here
-    console.log('Add to cart:', product, selectedSize, selectedColor, quantity);
+    // Use addToCart from context
+    addToCart(product, quantity, selectedSize, selectedColor);
   };
   
   const onGoBack = () => {
@@ -227,8 +216,15 @@ const ProductDetailPage: React.FC = () => {
                     Add to Cart
                   </button>
                   
-                  <button className="btn-secondary flex items-center space-x-2">
-                    <Heart className="h-5 w-5" />
+                  <button 
+                    onClick={() => toggleFavorite(product)}
+                    className="btn-secondary flex items-center space-x-2"
+                  >
+                    {isFavorite(product) ? (
+                      <Heart className="h-5 w-5 fill-red-500 text-red-500" />
+                    ) : (
+                      <Heart className="h-5 w-5" />
+                    )}
                   </button>
                   
                   <button className="btn-secondary flex items-center space-x-2">
