@@ -27,22 +27,32 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 		return () => clearInterval(interval);
 	}, [isHovered, product.image?.length]);
 
-	const nextImage = () => {
-		setCurrentImageIndex((prev) => (prev + 1) % (product.image?.length || 1));
+	const nextImage = (e: React.MouseEvent) => {
+        e.stopPropagation(); // Crucial: Stop event propagation here
+		setCurrentImageIndex((prev) => {
+			const newIndex = (prev + 1) % (product.image?.length || 1);
+			console.log('Next Image Clicked, new index:', newIndex);
+			return newIndex;
+		});
 	};
 
-	const prevImage = () => {
-		setCurrentImageIndex(
-			(prev) => (prev - 1 + (product.image?.length || 1)) % (product.image?.length || 1)
-		);
+	const prevImage = (e: React.MouseEvent) => {
+        e.stopPropagation(); // Crucial: Stop event propagation here
+		setCurrentImageIndex((prev) => {
+			const newIndex = (prev - 1 + (product.image?.length || 1)) % (product.image?.length || 1);
+			console.log('Previous Image Clicked, new index:', newIndex);
+			return newIndex;
+		});
 	};
 
 	const handleModalOpen = () => {
 		setOpen(true);
 		setCurrentImageIndex(0);
+		console.log("Modal Opened!"); // Confirm modal opening
 	};
 
-	const handleViewProduct = () => {
+	const handleViewProduct = (e: React.MouseEvent) => {
+        e.stopPropagation(); // Ensure this click doesn't propagate further
 		navigate(`/products/${product.id}`);
 	};
 
@@ -57,11 +67,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 	};
 
 	return (
-		<div className="product-card group cursor-pointer" onClick={handleViewProduct}>
+		<div className="product-card group">
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogTrigger asChild>
 					<div
-						className="relative overflow-hidden rounded-xl mb-4"
+						className="relative overflow-hidden rounded-xl mb-4 cursor-pointer"
 						onMouseEnter={() => setIsHovered(true)}
 						onMouseLeave={() => setIsHovered(false)}
                         onClick={(e) => {e.stopPropagation(); handleModalOpen()}}
@@ -117,26 +127,27 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 						<img
 							src={product.image?.[currentImageIndex] || ''}
 							alt={product.name}
-							className="w-full h-auto max-h-[80vh] object-contain rounded-xl animate-zoom-in"
+							className="w-full h-auto max-h-[80vh] object-contain rounded-xl animate-zoom-in cursor-pointer"
 							style={{ animation: "zoomIn 0.4s cubic-bezier(0.4,0,0.2,1)" }}
+							onClick={handleViewProduct}
 						/>
 
 						{/* Navigation buttons */}
 						<button
 							onClick={prevImage}
-							className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-200 hover:scale-110"
+							className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-200 hover:scale-110 z-10"
 						>
 							<ChevronLeft className="h-6 w-6" />
 						</button>
 						<button
 							onClick={nextImage}
-							className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-200 hover:scale-110"
+							className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-200 hover:scale-110 z-10"
 						>
 							<ChevronRight className="h-6 w-6" />
 						</button>
 
 						{/* Image counter */}
-						<div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+						<div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm z-10">
 							{currentImageIndex + 1} / {product.image?.length || 1}
 						</div>
 					</div>
@@ -146,6 +157,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 				<div>
 					<h3
 						className="font-playfair font-semibold text-lg text-foreground group-hover:text-primary transition-colors cursor-pointer"
+						onClick={handleViewProduct}
 					>
 						{product.name}
 					</h3>
