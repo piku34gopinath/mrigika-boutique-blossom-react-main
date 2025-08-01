@@ -1,18 +1,10 @@
 import React from "react";
 import ProductCard from "../components/ProductCard";
-import { Product } from "../types";
+import { useAppContext } from "../context/AppContext";
 
-interface FavoritesPageProps {
-	favorites: Product[];
-	onViewProduct: (product: Product) => void;
-	onRemoveFavorite: (product: Product) => void;
-}
+const FavoritesPage: React.FC = () => {
+    const { favorites, toggleFavorite } = useAppContext();
 
-const FavoritesPage: React.FC<FavoritesPageProps> = ({
-	favorites,
-	onViewProduct,
-	onRemoveFavorite,
-}) => {
 	return (
 		<div className="container mx-auto px-4 py-12 min-h-screen">
 			<h2 className="text-4xl font-playfair font-bold mb-8 text-primary text-center">
@@ -28,12 +20,10 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({
 						<div key={product.id} className="relative">
 							<ProductCard
 								product={product}
-								onViewProduct={onViewProduct}
-								onAddToCart={() => {}}
 							/>
 							<button
 								className="absolute top-2 right-2 bg-white/80 rounded-full p-2 shadow hover:bg-red-100"
-								onClick={() => onRemoveFavorite(product)}
+								onClick={() => toggleFavorite(product)}
 								aria-label="Remove from favorites"
 							>
 								<svg

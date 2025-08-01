@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartItem } from '../types';
 import { Plus, Minus, Trash2, ShoppingBag, ArrowLeft } from 'lucide-react';
+import sareeImg from "../assets/saree/cookiesSaree1.jpg";
 
-interface CartPageProps {
-  cartItems: CartItem[];
-  onUpdateQuantity: (productId: string, quantity: number) => void;
-  onRemoveItem: (productId: string) => void;
-}
+const initialCartItems: CartItem[] = [
+    // Replace with actual data fetching later
+    { id: '1', name: 'Elegant Saree', price: 1999, image: sareeImg, category: 'sarees', quantity: 1, selectedSize: 'M', selectedColor: 'Red', description: 'A beautiful saree for all occasions.' },
+];
 
-const CartPage: React.FC<CartPageProps> = ({
-  cartItems,
-  onUpdateQuantity,
-  onRemoveItem,
-}) => {
+const CartPage: React.FC = () => {
   const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState(initialCartItems);
+
+  const onUpdateQuantity = (productId: string, quantity: number) => {
+    setCartItems(cartItems.map(item => item.id === productId ? { ...item, quantity } : item));
+  };
+
+  const onRemoveItem = (productId: string) => {
+    setCartItems(cartItems.filter(item => item.id !== productId));
+  };
+
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 

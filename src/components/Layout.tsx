@@ -1,36 +1,24 @@
 import React from "react";
 import Navigation from "../components/Navigation";
-import { useLocation } from "react-router-dom";
+import Footer from "./Footer";
+import { useAppContext } from "@/context/AppContext";
 
 interface LayoutProps {
 	children: React.ReactNode;
-	cartItemsCount: number;
-	favoritesCount: number;
 }
 
-const Layout: React.FC<LayoutProps> = ({
-	children,
-	cartItemsCount,
-	favoritesCount,
-}) => {
-	const location = useLocation();
-
-	const getPageFromPath = (path) => {
-		if (path === "/") return "home";
-		const page = path.substring(1);
-		if (page.startsWith("product/")) return "productDetail";
-		return page;
-	};
+const Layout: React.FC<LayoutProps> = ({ children }) => {
+	const { cartItemsCount, favoritesCount } = useAppContext();
 
 	return (
-		<div>
+		<div className="flex flex-col min-h-screen">
 			<Navigation
 				cartItemsCount={cartItemsCount}
 				favoritesCount={favoritesCount}
-				currentPage={getPageFromPath(location.pathname)}
-				onPageChange={() => {}}
+				showOfferButton={true}
 			/>
-			<main>{children}</main>
+			<main className="flex-grow">{children}</main>
+			<Footer />
 		</div>
 	);
 };

@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { ShoppingBag, Menu, X, Instagram, Heart, User } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 interface NavigationProps {
 	cartItemsCount: number;
-	currentPage: string;
-	onPageChange: (page: string) => void;
 	favoritesCount?: number;
 	showOfferButton?: boolean;
 }
 
 const Navigation: React.FC<NavigationProps> = ({
 	cartItemsCount,
-	currentPage,
-	onPageChange,
 	favoritesCount = 0,
 	showOfferButton = false,
 }) => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	useEffect(() => {
 		const storedUser = localStorage.getItem("user");
@@ -39,6 +36,8 @@ const Navigation: React.FC<NavigationProps> = ({
 		{ id: "shop", label: "Shop", path: "/shop" },
 		{ id: "contact", label: "Contact", path: "/contact" },
 	];
+
+	const isCurrentPage = (path: string) => location.pathname === path;
 
 	return (
 		<nav className="sticky top-0 z-50 bg-background/70 backdrop-blur-lg border-b border-border shadow-lg transition-all">
@@ -62,7 +61,7 @@ const Navigation: React.FC<NavigationProps> = ({
 								to={item.path}
 								className={`font-medium text-lg px-3 py-1 rounded transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/40 hover:scale-105 hover:shadow-md
                   ${
-										currentPage === item.id
+										isCurrentPage(item.path)
 											? "text-primary border-b-2 border-primary bg-primary/10 shadow-lg scale-105"
 											: "text-muted-foreground hover:text-primary hover:bg-primary/5"
 									}
@@ -73,10 +72,10 @@ const Navigation: React.FC<NavigationProps> = ({
 						))}
 						{showOfferButton && (
 							<Link
-								to="/offer"
+								to="/offers"
 								className={`font-semibold text-lg px-4 py-1 rounded-full bg-gradient-to-r from-primary to-secondary text-white shadow hover:shadow-lg transition-all duration-300 ml-2 hover:scale-105 hover:shadow-xl
                   ${
-										currentPage === "offer"
+										isCurrentPage("/offers")
 											? "ring-2 ring-primary shadow-xl scale-105"
 											: "hover:shadow-primary/25"
 									}
@@ -103,7 +102,7 @@ const Navigation: React.FC<NavigationProps> = ({
 							to="/favorites"
 							className={`relative p-2 text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 hover:shadow-md rounded-full
                 ${
-									currentPage === "favorites"
+									isCurrentPage("/favorites")
 										? "text-primary scale-110 shadow-lg"
 										: ""
 								}
@@ -121,7 +120,7 @@ const Navigation: React.FC<NavigationProps> = ({
 							to="/cart"
 							className={`relative p-2 text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 hover:shadow-md rounded-full
                 ${
-									currentPage === "cart"
+									isCurrentPage("/cart")
 										? "text-primary scale-110 shadow-lg"
 										: ""
 								}
@@ -138,7 +137,7 @@ const Navigation: React.FC<NavigationProps> = ({
 						<button
 							onClick={handleProfileClick}
 							className={`relative p-2 text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 hover:shadow-md rounded-full ${
-								currentPage === "profile" || currentPage === "signin"
+								isCurrentPage("/profile") || isCurrentPage("/signin")
 									? "text-primary scale-110 shadow-lg"
 									: ""
 							}`}
@@ -170,7 +169,7 @@ const Navigation: React.FC<NavigationProps> = ({
 								onClick={() => setIsMobileMenuOpen(false)}
 								className={`block w-full text-left py-3 px-6 font-medium text-lg rounded transition-all duration-300 hover:scale-105 hover:shadow-md
                   ${
-										currentPage === item.id
+										isCurrentPage(item.path)
 											? "text-primary bg-primary/10 shadow-lg scale-105"
 											: "text-muted-foreground hover:text-primary hover:bg-primary/5"
 									}
@@ -181,11 +180,11 @@ const Navigation: React.FC<NavigationProps> = ({
 						))}
 						{showOfferButton && (
 							<Link
-								to="/offer"
+								to="/offers"
 								onClick={() => setIsMobileMenuOpen(false)}
 								className={`block w-full text-left py-3 px-6 font-semibold text-lg rounded-full bg-gradient-to-r from-primary to-secondary text-white shadow hover:shadow-lg transition-all duration-300 mt-2 hover:scale-105 hover:shadow-xl
                   ${
-										currentPage === "offer"
+										isCurrentPage("/offers")
 											? "ring-2 ring-primary shadow-xl scale-105"
 											: ""
 									}
@@ -199,7 +198,7 @@ const Navigation: React.FC<NavigationProps> = ({
 							onClick={() => setIsMobileMenuOpen(false)}
 							className={`block w-full text-left py-3 px-6 font-medium text-lg rounded transition-all duration-300 hover:scale-105 hover:shadow-md
                 ${
-									currentPage === "favorites"
+									isCurrentPage("/favorites")
 										? "text-primary bg-primary/10 shadow-lg scale-105"
 										: "text-muted-foreground hover:text-primary hover:bg-primary/5"
 								}
@@ -212,7 +211,7 @@ const Navigation: React.FC<NavigationProps> = ({
 							onClick={() => setIsMobileMenuOpen(false)}
 							className={`block w-full text-left py-3 px-6 font-medium text-lg rounded transition-all duration-300 hover:scale-105 hover:shadow-md
                 ${
-									currentPage === "cart"
+									isCurrentPage("/cart")
 										? "text-primary bg-primary/10 shadow-lg scale-105"
 										: "text-muted-foreground hover:text-primary hover:bg-primary/5"
 								}
@@ -226,7 +225,7 @@ const Navigation: React.FC<NavigationProps> = ({
 								setIsMobileMenuOpen(false);
 							}}
 							className={`block w-full text-left py-3 px-6 font-medium text-lg rounded transition-all duration-300 hover:scale-105 hover:shadow-md ${
-								currentPage === "profile" || currentPage === "signin"
+								isCurrentPage("/profile") || isCurrentPage("/signin")
 									? "text-primary bg-primary/10 shadow-lg scale-105"
 									: "text-muted-foreground hover:text-primary hover:bg-primary/5"
 							}`}

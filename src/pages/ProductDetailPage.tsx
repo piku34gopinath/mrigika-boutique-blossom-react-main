@@ -1,26 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Product } from '../types';
 import { ArrowLeft, ShoppingCart, Heart, Share2, Star, Truck, Shield, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react';
+import sareeImg from "../assets/saree/cookiesSaree1.jpg";
+import lehengaImg from "../assets/saree/saree2.jpg";
+import customizedImg from "../assets/saree/saree3.jpg";
+import kidsImg from "../assets/jewelry-product.jpg";
 
-interface ProductDetailPageProps {
-  product: Product;
-  onAddToCart: (product: Product, selectedSize?: string, selectedColor?: string) => void;
-  onGoBack: () => void;
-}
+const products: Product[] = [
+    // Replace with actual data fetching later
+    { id: '1', name: 'Elegant Saree', price: 1999, image: [sareeImg], category: 'sarees', description: 'A beautiful saree for all occasions.', sizes: ['S', 'M', 'L'], colors: ['Red', 'Blue', 'Green'] },
+    { id: '2', name: 'Designer Lehenga', price: 4999, image: [lehengaImg], category: 'lehengas', description: 'An elegant lehenga for special events.', sizes: ['S', 'M', 'L'], colors: ['Red', 'Blue', 'Green'] },
+    { id: '3', name: 'Customized Gown', price: 7999, image: [customizedImg], category: 'customized', description: 'A gown customized to your preferences.', sizes: ['S', 'M', 'L'], colors: ['Red', 'Blue', 'Green'] },
+    { id: '4', name: 'Kids Ethnic Wear', price: 999, image: [kidsImg], category: 'kids', description: 'Comfortable and stylish ethnic wear for kids.', sizes: ['S', 'M', 'L'], colors: ['Red', 'Blue', 'Green'] },
+    { id: '5', name: 'Handwoven Saree', price: 2499, image: [sareeImg], category: 'sarees', description: 'A traditional handwoven saree.', sizes: ['S', 'M', 'L'], colors: ['Red', 'Blue', 'Green'] },
+    { id: '6', name: 'Embroidered Lehenga', price: 5999, image: [lehengaImg], category: 'lehengas', description: 'A lehenga with intricate embroidery.', sizes: ['S', 'M', 'L'], colors: ['Red', 'Blue', 'Green'] },
+];
 
-const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ 
-  product, 
-  onAddToCart, 
-  onGoBack 
-}) => {
-  const [selectedSize, setSelectedSize] = useState<string>(product.sizes?.[0] || '');
-  const [selectedColor, setSelectedColor] = useState<string>(product.colors?.[0] || '');
+const ProductDetailPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const [product, setProduct] = useState<Product | null>(null);
+
+  useEffect(() => {
+    const foundProduct = products.find(p => p.id === id);
+    setProduct(foundProduct || null);
+  }, [id]);
+
+  const [selectedSize, setSelectedSize] = useState<string>('');
+  const [selectedColor, setSelectedColor] = useState<string>('');
   const [quantity, setQuantity] = useState<number>(1);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
+  useEffect(() => {
+    if (product) {
+      setSelectedSize(product.sizes?.[0] || '');
+      setSelectedColor(product.colors?.[0] || '');
+    }
+  }, [product]);
+
+  if (!product) {
+    return <div>Product not found</div>;
+  }
+
   const handleAddToCart = () => {
-    onAddToCart(product, selectedSize, selectedColor);
+    // Add to cart logic here
+    console.log('Add to cart:', product, selectedSize, selectedColor, quantity);
   };
+  
+  const onGoBack = () => {
+      navigate('/shop');
+  }
 
   const benefits = [
     {
@@ -231,7 +261,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">SKU:</span>
-                    <span>MRG-{product.id.padStart(4, '0')}</span>
+                    <span>MRG-{(product.id || '').padStart(4, '0')}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Availability:</span>

@@ -1,26 +1,30 @@
 import React, { useState, useMemo, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import { Product } from "../types";
 import { Filter, SlidersHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import sareeImg from "../assets/saree/cookiesSaree1.jpg";
+import lehengaImg from "../assets/saree/saree2.jpg";
+import customizedImg from "../assets/saree/saree3.jpg";
+import kidsImg from "../assets/jewelry-product.jpg";
 
-interface ShopPageProps {
-	products: Product[];
-	onAddToCart: (product: Product) => void;
-	onViewProduct: (product: Product) => void;
-	initialCategory?: string;
-	favorites: Product[];
-	onToggleFavorite: (product: Product) => void;
-}
+const products: Product[] = [
+    // Replace with actual data fetching later
+    { id: '1', name: 'Elegant Saree', price: 1999, image: [sareeImg], category: 'sarees' },
+    { id: '2', name: 'Designer Lehenga', price: 4999, image: [lehengaImg], category: 'lehengas' },
+    { id: '3', name: 'Customized Gown', price: 7999, image: [customizedImg], category: 'customized' },
+    { id: '4', name: 'Kids Ethnic Wear', price: 999, image: [kidsImg], category: 'kids' },
+    { id: '5', name: 'Handwoven Saree', price: 2499, image: [sareeImg], category: 'sarees' },
+    { id: '6', name: 'Embroidered Lehenga', price: 5999, image: [lehengaImg], category: 'lehengas' },
+];
 
-const ShopPage: React.FC<ShopPageProps> = ({
-	products,
-	onAddToCart,
-	onViewProduct,
-	initialCategory,
-	favorites,
-	onToggleFavorite,
-}) => {
+const ShopPage: React.FC = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const queryParams = new URLSearchParams(location.search);
+    const initialCategory = queryParams.get('category');
+
 	const [selectedCategory, setSelectedCategory] = useState<string>(
 		initialCategory || "all"
 	);
@@ -39,7 +43,8 @@ const ShopPage: React.FC<ShopPageProps> = ({
 		{ id: "sarees", label: "Sarees" },
 		{ id: "kurtis", label: "Kurtis" },
 		{ id: "lehengas", label: "Lehengas" },
-		{ id: "accessories", label: "Accessories" },
+        { id: "customized", label: "Customized" },
+		{ id: "kids", label: "Kids" },
 	];
 
 	const priceRanges = [
@@ -98,7 +103,7 @@ const ShopPage: React.FC<ShopPageProps> = ({
 				break;
 			case "featured":
 			default:
-				filtered.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+				// Add a default sort for featured if it's not a property on the product
 				break;
 		}
 
@@ -201,19 +206,10 @@ const ShopPage: React.FC<ShopPageProps> = ({
 				{filteredAndSortedProducts.length > 0 ? (
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
 						{filteredAndSortedProducts.map((product) => (
-							<div
+							<ProductCard
 								key={product.id}
-								className="cursor-pointer"
-								onClick={() => onViewProduct(product)}
-							>
-								<ProductCard
-									product={product}
-									onAddToCart={onAddToCart}
-									onViewProduct={onViewProduct}
-									isFavorite={favorites?.some((fav) => fav.id === product.id)}
-									onToggleFavorite={onToggleFavorite}
-								/>
-							</div>
+								product={product}
+							/>
 						))}
 					</div>
 				) : (

@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { ShoppingCart, Heart, ChevronLeft, ChevronRight } from "lucide-react";
 import { Product } from "../types";
 import { Dialog, DialogTrigger, DialogContent } from "./ui/dialog";
+import { useAppContext } from "../context/AppContext";
 
 interface ProductCardProps {
 	product: Product;
-	onAddToCart: (product: Product) => void;
-	onViewProduct: (product: Product) => void;
-	isFavorite?: boolean;
-	onToggleFavorite?: (product: Product) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({
-	product,
-	onAddToCart,
-	onViewProduct,
-	isFavorite = false,
-	onToggleFavorite,
-}) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+	const navigate = useNavigate();
+	const { addToCart, toggleFavorite, isFavorite } = useAppContext();
 	const [open, setOpen] = useState(false);
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
 	const [isHovered, setIsHovered] = useState(false);
@@ -27,19 +21,19 @@ const ProductCard: React.FC<ProductCardProps> = ({
 		if (!isHovered) return;
 
 		const interval = setInterval(() => {
-			setCurrentImageIndex((prev) => (prev + 1) % product.image.length);
+			setCurrentImageIndex((prev) => (prev + 1) % (product.image?.length || 1)));
 		}, 2000); // Change image every 2 seconds
 
 		return () => clearInterval(interval);
-	}, [isHovered, product.image.length]);
+	}, [isHovered, product.image?.length]);
 
 	const nextImage = () => {
-		setCurrentImageIndex((prev) => (prev + 1) % product.image.length);
+		setCurrentImageIndex((prev) => (prev + 1) % (product.image?.length || 1)));
 	};
 
 	const prevImage = () => {
 		setCurrentImageIndex(
-			(prev) => (prev - 1 + product.image.length) % product.image.length
+			(prev) => (prev - 1 + (product.image?.length || 1)) % (product.image?.length || 1)
 		);
 	};
 
@@ -48,26 +42,40 @@ const ProductCard: React.FC<ProductCardProps> = ({
 		setCurrentImageIndex(0);
 	};
 
+	const handleViewProduct = () => {
+		navigate(`/products/${product.id}`);
+	};
+
+	const handleAddToCart = (e: React.MouseEvent) => {
+        e.stopPropagation();
+		addToCart(product);
+	};
+
+	const handleToggleFavorite = (e: React.MouseEvent) => {
+        e.stopPropagation();
+		toggleFavorite(product);
+	};
+
 	return (
-		<div className="product-card group cursor-pointer">
+		<div className="product-card group cursor-pointer" onClick={handleViewProduct}>
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogTrigger asChild>
 					<div
 						className="relative overflow-hidden rounded-xl mb-4"
 						onMouseEnter={() => setIsHovered(true)}
 						onMouseLeave={() => setIsHovered(false)}
+                        onClick={(e) => {e.stopPropagation(); handleModalOpen()}}
 					>
 						<img
-							src={product.image[currentImageIndex]}
+							src={product.image?.[currentImageIndex] || ''}
 							alt={product.name}
 							className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
-							onClick={handleModalOpen}
 						/>
 						<div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
 						{/* Image indicators */}
 						<div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1">
-							{product.image.map((_, index) => (
+							{product.image?.map((_, index) => (
 								<div
 									key={index}
 									className={`w-2 h-2 rounded-full transition-all duration-300 ${
@@ -81,15 +89,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
 						<div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
 							<button
 								className="p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:bg-white transition-colors"
-								onClick={(e) => {
-									e.stopPropagation();
-									onToggleFavorite && onToggleFavorite(product);
-								}}
+								onClick={handleToggleFavorite}
 								aria-label={
-									isFavorite ? "Remove from favorites" : "Add to favorites"
+									isFavorite(product) ? "Remove from favorites" : "Add to favorites"
 								}
 							>
-								{isFavorite ? (
+								{isFavorite(product) ? (
 									<Heart className="h-4 w-4 text-red-500 fill-red-500" />
 								) : (
 									<Heart className="h-4 w-4 text-muted-foreground" />
@@ -110,7 +115,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 				<DialogContent className="max-w-4xl p-0 bg-transparent shadow-none border-none flex items-center justify-center">
 					<div className="relative w-full h-auto max-h-[80vh]">
 						<img
-							src={product.image[currentImageIndex]}
+							src={product.image?.[currentImageIndex] || ''}
 							alt={product.name}
 							className="w-full h-auto max-h-[80vh] object-contain rounded-xl animate-zoom-in"
 							style={{ animation: "zoomIn 0.4s cubic-bezier(0.4,0,0.2,1)" }}
@@ -132,7 +137,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
 						{/* Image counter */}
 						<div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
-							{currentImageIndex + 1} / {product.image.length}
+							{currentImageIndex + 1} / {product.image?.length || 1}
 						</div>
 					</div>
 				</DialogContent>
@@ -141,7 +146,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
 				<div>
 					<h3
 						className="font-playfair font-semibold text-lg text-foreground group-hover:text-primary transition-colors cursor-pointer"
-						onClick={() => onViewProduct(product)}
 					>
 						{product.name}
 					</h3>
@@ -160,7 +164,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 				</div>
 
 				<button
-					onClick={() => onAddToCart(product)}
+					onClick={handleAddToCart}
 					className="btn-boutique w-full flex items-center justify-center space-x-2"
 				>
 					<ShoppingCart className="h-4 w-4" />

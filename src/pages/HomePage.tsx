@@ -17,33 +17,14 @@ import lehengaImg from "../assets/saree/saree2.jpg";
 import customizedImg from "../assets/saree/saree3.jpg";
 import kidsImg from "../assets/jewelry-product.jpg";
 
-interface HomePageProps {
-	featuredProducts: Product[];
-	productsByCategory: {
-		sarees: Product[];
-		lehengas: Product[];
-		customized: Product[];
-		kids: Product[];
-	};
-	onViewProduct: (product: Product) => void;
-	onAddToCart: (product: Product) => void;
-	onViewProduct: (product: Product) => void;
-	onShopNow: () => void;
-	onCategoryFilter: (category: string) => void;
-	onToggleFavorite: (product: Product) => void;
-	favorites: Product[];
-	onCategoryFilter: (category: string) => void;
-}
+const featuredProducts: Product[] = [
+    // Replace with actual data fetching later
+    { id: '1', name: 'Elegant Saree', price: 1999, image: [sareeImg], category: 'sarees' },
+    { id: '2', name: 'Designer Lehenga', price: 4999, image: [lehengaImg], category: 'lehengas' },
+    { id: '3', name: 'Customized Gown', price: 7999, image: [customizedImg], category: 'customized' },
+];
 
-const HomePage: React.FC<HomePageProps> = ({
-	featuredProducts,
-	productsByCategory,
-	onViewProduct,
-	onAddToCart,
-	onToggleFavorite,
-	favorites,
-	onCategoryFilter,
-}) => {
+const HomePage: React.FC = () => {
 	const navigate = useNavigate();
 
 	const features = [
@@ -100,12 +81,7 @@ const HomePage: React.FC<HomePageProps> = ({
 	};
 
 	const handleViewCategory = (categoryKey: string) => {
-		onCategoryFilter(categoryKey);
-		navigate("/shop");
-	};
-
-	const handleViewProduct = (product: Product) => {
-		navigate(`/product/${product.id}`);
+		navigate(`/shop?category=${categoryKey}`);
 	};
 
 	return (
@@ -215,10 +191,6 @@ const HomePage: React.FC<HomePageProps> = ({
 							<ProductCard
 								key={product.id}
 								product={product}
-								onAddToCart={onAddToCart}
-								onViewProduct={onViewProduct}
-								isFavorite={favorites?.some((fav) => fav.id === product.id)}
-								onToggleFavorite={onToggleFavorite}
 							/>
 						))}
 					</div>
