@@ -3,7 +3,7 @@ export interface Product {
   name: string;
   price: number;
   description: string;
-  image: string;
+  image: string[];
   category: 'sarees' | 'lehengas' | 'customized' | 'kids';
   sizes?: string[];
   colors?: string[];

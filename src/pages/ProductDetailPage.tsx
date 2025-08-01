@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Product } from '../types';
-import { ArrowLeft, ShoppingCart, Heart, Share2, Star, Truck, Shield, RefreshCw } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Heart, Share2, Star, Truck, Shield, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface ProductDetailPageProps {
   product: Product;
@@ -16,6 +16,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes?.[0] || '');
   const [selectedColor, setSelectedColor] = useState<string>(product.colors?.[0] || '');
   const [quantity, setQuantity] = useState<number>(1);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
   const handleAddToCart = () => {
     onAddToCart(product, selectedSize, selectedColor);
@@ -52,13 +53,46 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Product Images */}
             <div className="space-y-4">
-              <div className="aspect-square overflow-hidden rounded-2xl bg-muted">
+              <div className="relative aspect-square overflow-hidden rounded-2xl bg-muted">
                 <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
+                  src={product.image[currentImageIndex]}
+                  alt={`${product.name} - image ${currentImageIndex + 1}`}
+                  className="w-full h-full object-cover transition-opacity duration-300"
                 />
+                {product.image.length > 1 && (
+                  <>
+                    <button
+                      onClick={() => setCurrentImageIndex(prev => (prev - 1 + product.image.length) % product.image.length)}
+                      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-200 hover:scale-110"
+                    >
+                      <ChevronLeft className="h-6 w-6" />
+                    </button>
+                    <button
+                      onClick={() => setCurrentImageIndex(prev => (prev + 1) % product.image.length)}
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-200 hover:scale-110"
+                    >
+                      <ChevronRight className="h-6 w-6" />
+                    </button>
+                  </>
+                )}
               </div>
+              {product.image.length > 1 && (
+                <div className="grid grid-cols-5 gap-4">
+                  {product.image.map((img, index) => (
+                    <div
+                      key={index}
+                      className={`aspect-square overflow-hidden rounded-lg cursor-pointer border-2 ${currentImageIndex === index ? 'border-primary' : 'border-transparent'}`}
+                      onClick={() => setCurrentImageIndex(index)}
+                    >
+                      <img
+                        src={img}
+                        alt={`${product.name} thumbnail ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Product Information */}

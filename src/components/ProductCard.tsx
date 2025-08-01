@@ -22,31 +22,24 @@ const ProductCard: React.FC<ProductCardProps> = ({
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
 	const [isHovered, setIsHovered] = useState(false);
 
-	// Generate multiple images for each product (using the same image for demo)
-	const productImages = [
-		product.image,
-		product.image, // In real app, these would be different images
-		product.image,
-	];
-
 	// Auto-slide on hover
 	useEffect(() => {
 		if (!isHovered) return;
 
 		const interval = setInterval(() => {
-			setCurrentImageIndex((prev) => (prev + 1) % productImages.length);
+			setCurrentImageIndex((prev) => (prev + 1) % product.image.length);
 		}, 2000); // Change image every 2 seconds
 
 		return () => clearInterval(interval);
-	}, [isHovered, productImages.length]);
+	}, [isHovered, product.image.length]);
 
 	const nextImage = () => {
-		setCurrentImageIndex((prev) => (prev + 1) % productImages.length);
+		setCurrentImageIndex((prev) => (prev + 1) % product.image.length);
 	};
 
 	const prevImage = () => {
 		setCurrentImageIndex(
-			(prev) => (prev - 1 + productImages.length) % productImages.length
+			(prev) => (prev - 1 + product.image.length) % product.image.length
 		);
 	};
 
@@ -65,7 +58,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 						onMouseLeave={() => setIsHovered(false)}
 					>
 						<img
-							src={productImages[currentImageIndex]}
+							src={product.image[currentImageIndex]}
 							alt={product.name}
 							className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
 							onClick={handleModalOpen}
@@ -74,7 +67,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
 						{/* Image indicators */}
 						<div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1">
-							{productImages.map((_, index) => (
+							{product.image.map((_, index) => (
 								<div
 									key={index}
 									className={`w-2 h-2 rounded-full transition-all duration-300 ${
@@ -117,7 +110,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 				<DialogContent className="max-w-4xl p-0 bg-transparent shadow-none border-none flex items-center justify-center">
 					<div className="relative w-full h-auto max-h-[80vh]">
 						<img
-							src={productImages[currentImageIndex]}
+							src={product.image[currentImageIndex]}
 							alt={product.name}
 							className="w-full h-auto max-h-[80vh] object-contain rounded-xl animate-zoom-in"
 							style={{ animation: "zoomIn 0.4s cubic-bezier(0.4,0,0.2,1)" }}
@@ -139,7 +132,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
 						{/* Image counter */}
 						<div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
-							{currentImageIndex + 1} / {productImages.length}
+							{currentImageIndex + 1} / {product.image.length}
 						</div>
 					</div>
 				</DialogContent>
@@ -179,10 +172,3 @@ const ProductCard: React.FC<ProductCardProps> = ({
 };
 
 export default ProductCard;
-
-// Add keyframes for zoom-in animation
-// In your global CSS (e.g., index.css or App.css), add:
-// @keyframes zoomIn {
-//   0% { transform: scale(0.8); opacity: 0; }
-//   100% { transform: scale(1); opacity: 1; }
-// }
