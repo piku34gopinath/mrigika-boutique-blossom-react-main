@@ -1,28 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartItem } from '../types';
 import { Plus, Minus, Trash2, ShoppingBag, ArrowLeft } from 'lucide-react';
-import sareeImg from "../assets/saree/cookiesSaree1.jpg";
-
-const initialCartItems: CartItem[] = [
-    // Replace with actual data fetching later
-    { id: '1', name: 'Elegant Saree', price: 1999, image: sareeImg, category: 'sarees', quantity: 1, selectedSize: 'M', selectedColor: 'Red', description: 'A beautiful saree for all occasions.' },
-];
+import { useAppContext } from '../context/AppContext';
 
 const CartPage: React.FC = () => {
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState(initialCartItems);
-
-  const onUpdateQuantity = (productId: string, quantity: number) => {
-    setCartItems(cartItems.map(item => item.id === productId ? { ...item, quantity } : item));
-  };
-
-  const onRemoveItem = (productId: string) => {
-    setCartItems(cartItems.filter(item => item.id !== productId));
-  };
+  const { cartItems, updateCartQuantity, removeFromCart, cartItemsCount } = useAppContext();
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   const handleGoToShop = () => {
     navigate('/shop');
@@ -65,7 +50,7 @@ const CartPage: React.FC = () => {
           </button>
           <div>
             <h1 className="text-4xl font-playfair font-bold">Shopping Cart</h1>
-            <p className="text-muted-foreground">{itemCount} items in your cart</p>
+            <p className="text-muted-foreground">{cartItemsCount} items in your cart</p>
           </div>
         </div>
 
@@ -74,14 +59,14 @@ const CartPage: React.FC = () => {
           <div className="lg:col-span-2 space-y-4">
             {cartItems.map((item) => (
               <div
-                key={item.id}
+                key={`${item.id}-${item.selectedSize || ''}-${item.selectedColor || ''}`}
                 className="bg-card border border-border rounded-2xl p-6 shadow-soft"
               >
                 <div className="flex flex-col md:flex-row gap-6">
                   {/* Product Image */}
                   <div className="flex-shrink-0">
                     <img
-                      src={item.image}
+                      src={item.image ? item.image[0] : ''}
                       alt={item.name}
                       className="w-32 h-32 object-cover rounded-xl"
                     />
@@ -118,14 +103,14 @@ const CartPage: React.FC = () => {
                         {/* Quantity Controls */}
                         <div className="flex items-center space-x-2 bg-muted rounded-full">
                           <button
-                            onClick={() => onUpdateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                            onClick={() => updateCartQuantity(item.id, Math.max(1, item.quantity - 1))}
                             className="p-2 hover:bg-background rounded-full transition-colors"
                           >
                             <Minus className="h-4 w-4" />
                           </button>
                           <span className="w-8 text-center font-medium">{item.quantity}</span>
                           <button
-                            onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+                            onClick={() => updateCartQuantity(item.id, item.quantity + 1)}
                             className="p-2 hover:bg-background rounded-full transition-colors"
                           >
                             <Plus className="h-4 w-4" />
@@ -134,7 +119,7 @@ const CartPage: React.FC = () => {
 
                         {/* Remove Button */}
                         <button
-                          onClick={() => onRemoveItem(item.id)}
+                          onClick={() => removeFromCart(item.id)}
                           className="p-2 text-muted-foreground hover:text-destructive transition-colors"
                         >
                           <Trash2 className="h-4 w-4" />
@@ -161,7 +146,7 @@ const CartPage: React.FC = () => {
 
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between">
-                  <span>Subtotal ({itemCount} items)</span>
+                  <span>Subtotal ({cartItemsCount} items)</span>
                   <span>₹{total.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between">

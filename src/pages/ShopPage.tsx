@@ -4,20 +4,7 @@ import ProductCard from "../components/ProductCard";
 import { Product } from "../types";
 import { Filter, SlidersHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import sareeImg from "../assets/saree/cookiesSaree1.jpg";
-import lehengaImg from "../assets/saree/saree2.jpg";
-import customizedImg from "../assets/saree/saree3.jpg";
-import kidsImg from "../assets/jewelry-product.jpg";
-
-const products: Product[] = [
-    // Replace with actual data fetching later
-    { id: '1', name: 'Elegant Saree', price: 1999, image: [sareeImg], category: 'sarees' },
-    { id: '2', name: 'Designer Lehenga', price: 4999, image: [lehengaImg], category: 'lehengas' },
-    { id: '3', name: 'Customized Gown', price: 7999, image: [customizedImg], category: 'customized' },
-    { id: '4', name: 'Kids Ethnic Wear', price: 999, image: [kidsImg], category: 'kids' },
-    { id: '5', name: 'Handwoven Saree', price: 2499, image: [sareeImg], category: 'sarees' },
-    { id: '6', name: 'Embroidered Lehenga', price: 5999, image: [lehengaImg], category: 'lehengas' },
-];
+import { products } from "../data/products"; // Import products from data/products.ts
 
 const ShopPage: React.FC = () => {
     const location = useLocation();

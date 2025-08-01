@@ -21,14 +21,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 		if (!isHovered) return;
 
 		const interval = setInterval(() => {
-			setCurrentImageIndex((prev) => (prev + 1) % (product.image?.length || 1)));
+			setCurrentImageIndex((prev) => (prev + 1) % (product.image?.length || 1));
 		}, 2000); // Change image every 2 seconds
 
 		return () => clearInterval(interval);
 	}, [isHovered, product.image?.length]);
 
 	const nextImage = () => {
-		setCurrentImageIndex((prev) => (prev + 1) % (product.image?.length || 1)));
+		setCurrentImageIndex((prev) => (prev + 1) % (product.image?.length || 1));
 	};
 
 	const prevImage = () => {
