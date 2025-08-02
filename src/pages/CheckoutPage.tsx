@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Customer } from '../types';
 import { CreditCard, Truck, CheckCircle, Trash2, Plus, Minus, Tag, ShoppingCart } from 'lucide-react';
@@ -23,6 +23,18 @@ const CheckoutPage: React.FC = () => {
     });
 
     const [errors, setErrors] = useState<Partial<Customer>>({});
+
+    useEffect(() => {
+        if (localStorage.getItem('whatsapp_redirect')) {
+            clearCart();
+            toast({
+                title: 'Order Placed!',
+                description: 'Your order has been placed successfully.',
+            });
+            localStorage.removeItem('whatsapp_redirect');
+            navigate('/');
+        }
+    }, [clearCart, navigate, toast]);
 
     const total = useMemo(() => cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0), [cartItems]);
     const shipping = useMemo(() => (total >= 1999 ? 0 : 99), [total]);
