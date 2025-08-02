@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { CartItem, Customer } from '../types';
-import { CreditCard, Truck, CheckCircle } from 'lucide-react';
-import sareeImg from "../assets/saree/cookiesSaree1.jpg";
 
-const initialCartItems: CartItem[] = [
-    // Replace with actual data fetching later
-    { id: '1', name: 'Elegant Saree', price: 1999, image: sareeImg, category: 'sarees', quantity: 1, selectedSize: 'M', selectedColor: 'Red', description: 'A beautiful saree for all occasions.' },
-];
+import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Customer } from '../types';
+import { CreditCard, Truck, CheckCircle, Trash2, Plus, Minus, Tag, ShoppingCart } from 'lucide-react';
+import { useAppContext } from '../context/AppContext';
+import { useToast } from '@/hooks/use-toast';
 
 const CheckoutPage: React.FC = () => {
     const navigate = useNavigate();
-    const [cartItems] = useState(initialCartItems);
+    const { cartItems, updateCartQuantity, removeFromCart } = useAppContext();
+    const { toast } = useToast();
+    const [couponCode, setCouponCode] = useState('');
+    const [discount, setDiscount] = useState(0);
+
     const [customer, setCustomer] = useState<Customer>({
         name: '',
         email: '',
@@ -23,13 +24,33 @@ const CheckoutPage: React.FC = () => {
 
     const [errors, setErrors] = useState<Partial<Customer>>({});
 
-    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const shipping = total >= 1999 ? 0 : 99;
-    const finalTotal = total + shipping;
+    const total = useMemo(() => cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0), [cartItems]);
+    const shipping = useMemo(() => (total >= 1999 ? 0 : 99), [total]);
+
+    const finalTotal = useMemo(() => {
+        const discountedTotal = total * (1 - discount);
+        return discountedTotal + shipping;
+    }, [total, discount, shipping]);
+
+    const handleApplyCoupon = () => {
+        if (couponCode.trim().toLowerCase() === 'mrigika3') {
+            setDiscount(0.20); // 20% discount
+            toast({
+                title: 'Coupon Applied!',
+                description: 'You\'ve received a 20% discount.',
+            });
+        } else {
+            setDiscount(0);
+            toast({
+                title: 'Invalid Coupon',
+                description: 'The coupon code you entered is not valid.',
+                variant: 'destructive',
+            });
+        }
+    };
 
     const validateForm = (): boolean => {
         const newErrors: Partial<Customer> = {};
-
         if (!customer.name.trim()) newErrors.name = 'Name is required';
         if (!customer.email.trim()) newErrors.email = 'Email is required';
         if (!customer.phone.trim()) newErrors.phone = 'Phone is required';
@@ -37,12 +58,10 @@ const CheckoutPage: React.FC = () => {
         if (!customer.city.trim()) newErrors.city = 'City is required';
         if (!customer.pincode.trim()) newErrors.pincode = 'Pincode is required';
 
-        // Email validation
         if (customer.email && !/\S+@\S+\.\S+/.test(customer.email)) {
             newErrors.email = 'Please enter a valid email';
         }
 
-        // Phone validation
         if (customer.phone && !/^\d{10}$/.test(customer.phone.replace(/\D/g, ''))) {
             newErrors.phone = 'Please enter a valid 10-digit phone number';
         }
@@ -60,11 +79,26 @@ const CheckoutPage: React.FC = () => {
 
     const handleInputChange = (field: keyof Customer, value: string) => {
         setCustomer(prev => ({ ...prev, [field]: value }));
-        // Clear error when user starts typing
         if (errors[field]) {
             setErrors(prev => ({ ...prev, [field]: '' }));
         }
     };
+
+    if (cartItems.length === 0) {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center text-center">
+                <ShoppingCart className="h-16 w-16 text-primary mb-4" />
+                <h1 className="text-3xl font-playfair font-bold mb-2">Your Cart is Empty</h1>
+                <p className="text-muted-foreground mb-6">Looks like you haven't added anything to your cart yet.</p>
+                <button
+                    onClick={() => navigate('/shop')}
+                    className="btn-boutique flex items-center justify-center space-x-2"
+                >
+                    <span>Continue Shopping</span>
+                </button>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen py-8">
@@ -80,7 +114,6 @@ const CheckoutPage: React.FC = () => {
                                     <Truck className="h-6 w-6 text-primary" />
                                     <h2 className="text-xl font-playfair font-semibold">Shipping Information</h2>
                                 </div>
-
                                 <div className="space-y-4">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div>
@@ -172,7 +205,6 @@ const CheckoutPage: React.FC = () => {
                                     <CreditCard className="h-6 w-6 text-primary" />
                                     <h2 className="text-xl font-playfair font-semibold">Payment Method</h2>
                                 </div>
-
                                 <div className="space-y-4">
                                     <div className="border border-border rounded-lg p-4">
                                         <div className="flex items-center space-x-3">
@@ -205,19 +237,45 @@ const CheckoutPage: React.FC = () => {
                                             <img
                                                 src={item.image}
                                                 alt={item.name}
-                                                className="w-16 h-16 object-cover rounded-lg"
+                                                className="w-20 h-20 object-cover rounded-lg"
                                             />
                                             <div className="flex-grow">
                                                 <h4 className="font-medium">{item.name}</h4>
-                                                <p className="text-muted-foreground text-sm">
-                                                    Qty: {item.quantity}
-                                                </p>
+                                                <div className="flex items-center space-x-2 mt-1">
+                                                    <button onClick={() => updateCartQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1} className="p-1 rounded-full bg-secondary hover:bg-secondary/80">
+                                                        <Minus className="h-4 w-4" />
+                                                    </button>
+                                                    <span>{item.quantity}</span>
+                                                    <button onClick={() => updateCartQuantity(item.id, item.quantity + 1)} className="p-1 rounded-full bg-secondary hover:bg-secondary/80">
+                                                        <Plus className="h-4 w-4" />
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <span className="font-semibold">
-                                                ₹{(item.price * item.quantity).toLocaleString()}
-                                            </span>
+                                            <div className="text-right">
+                                                <span className="font-semibold">
+                                                    ₹{(item.price * item.quantity).toLocaleString()}
+                                                </span>
+                                                <button onClick={() => removeFromCart(item.id)} className="text-destructive hover:text-destructive/80 mt-1">
+                                                    <Trash2 className="h-4 w-4" />
+                                                </button>
+                                            </div>
                                         </div>
                                     ))}
+                                </div>
+
+                                {/* Coupon Code */}
+                                <div className="flex space-x-2 mb-6">
+                                    <input
+                                        type="text"
+                                        value={couponCode}
+                                        onChange={(e) => setCouponCode(e.target.value)}
+                                        placeholder="Enter coupon code"
+                                        className="w-full px-4 py-2 border rounded-lg bg-background focus:ring-2 focus:ring-primary"
+                                    />
+                                    <button onClick={handleApplyCoupon} className="btn-boutique flex items-center space-x-2">
+                                        <Tag className="h-5 w-5" />
+                                        <span>Apply</span>
+                                    </button>
                                 </div>
 
                                 {/* Pricing */}
@@ -226,6 +284,12 @@ const CheckoutPage: React.FC = () => {
                                         <span>Subtotal</span>
                                         <span>₹{total.toLocaleString()}</span>
                                     </div>
+                                    {discount > 0 && (
+                                        <div className="flex justify-between text-primary">
+                                            <span>Discount (20%)</span>
+                                            <span>-₹{(total * discount).toLocaleString()}</span>
+                                        </div>
+                                    )}
                                     <div className="flex justify-between">
                                         <span>Shipping</span>
                                         <span className={shipping === 0 ? 'text-primary' : ''}>
@@ -248,7 +312,6 @@ const CheckoutPage: React.FC = () => {
                                     <CheckCircle className="h-5 w-5" />
                                     <span>Place Order</span>
                                 </button>
-
                                 <p className="text-muted-foreground text-xs text-center mt-4">
                                     By placing your order, you agree to our Terms of Service and Privacy Policy
                                 </p>
