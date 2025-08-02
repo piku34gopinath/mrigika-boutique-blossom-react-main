@@ -11,6 +11,7 @@ interface AppContextType {
     addToCart: (product: Product, quantity?: number, selectedSize?: string, selectedColor?: string) => void;
     removeFromCart: (productId: string) => void;
     updateCartQuantity: (productId: string, quantity: number) => void;
+    clearCart: () => void;
     toggleFavorite: (product: Product) => void;
     isFavorite: (product: Product) => boolean;
     cartItemsCount: number;
@@ -29,6 +30,18 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         const stored = localStorage.getItem("favorites");
         return stored ? JSON.parse(stored) : [];
     });
+
+    useEffect(() => {
+        const whatsappRedirect = localStorage.getItem('whatsapp_redirect');
+        if (whatsappRedirect === 'true') {
+            clearCart();
+            localStorage.removeItem('whatsapp_redirect');
+            toast({
+                title: "Order Placed!",
+                description: "Thank you for your purchase.",
+            });
+        }
+    }, []);
 
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -65,6 +78,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         setCartItems(prev => prev.map(item => item.id === productId ? { ...item, quantity } : item));
     };
 
+    const clearCart = () => {
+        setCartItems([]);
+    };
+
     const isFavorite = (product: Product) => favorites.some((fav) => fav.id === product.id);
 
     const toggleFavorite = (product: Product) => {
@@ -96,6 +113,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
             addToCart,
             removeFromCart,
             updateCartQuantity,
+            clearCart,
             toggleFavorite,
             isFavorite,
             cartItemsCount,

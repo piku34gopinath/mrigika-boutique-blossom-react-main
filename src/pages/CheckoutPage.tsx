@@ -8,7 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 
 const CheckoutPage: React.FC = () => {
     const navigate = useNavigate();
-    const { cartItems, updateCartQuantity, removeFromCart } = useAppContext();
+    const { cartItems, updateCartQuantity, removeFromCart, clearCart } = useAppContext();
     const { toast } = useToast();
     const [couponCode, setCouponCode] = useState('');
     const [discount, setDiscount] = useState(0);
@@ -72,8 +72,27 @@ const CheckoutPage: React.FC = () => {
 
     const handleSubmit = () => {
         if (validateForm()) {
-            console.log('Placing order with customer:', customer);
-            // onPlaceOrder(customer);
+            const orderDetails = `
+*New Order Received!*
+
+*Customer Details:*
+Name: ${customer.name}
+Email: ${customer.email}
+Phone: ${customer.phone}
+Address: ${customer.address}, ${customer.city}, ${customer.pincode}
+
+*Order Summary:*
+${cartItems.map(item => `${item.name} (x${item.quantity}) - ₹${(item.price * item.quantity).toLocaleString()}`).join('\n')}
+
+Subtotal: ₹${total.toLocaleString()}
+Discount: -₹${(total * discount).toLocaleString()}
+Shipping: ${shipping === 0 ? 'Free' : `₹${shipping}`}
+*Total: ₹${finalTotal.toLocaleString()}*
+            `;
+
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=+917978439518&text=${encodeURIComponent(orderDetails)}`;
+            localStorage.setItem('whatsapp_redirect', 'true');
+            window.location.href = whatsappUrl;
         }
     };
 
@@ -99,7 +118,6 @@ const CheckoutPage: React.FC = () => {
             </div>
         );
     }
-
     return (
         <div className="min-h-screen py-8">
             <div className="container mx-auto px-4">
@@ -235,7 +253,7 @@ const CheckoutPage: React.FC = () => {
                                     {cartItems.map((item) => (
                                         <div key={item.id} className="flex items-center space-x-4">
                                             <img
-                                                src={item.image}
+                                                src={item.image[0]}
                                                 alt={item.name}
                                                 className="w-20 h-20 object-cover rounded-lg"
                                             />
