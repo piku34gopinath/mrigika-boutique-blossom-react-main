@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
-import heroImage from "../assets/banner/banner1.png";
+import heroImage from "../assets/banner/banner2.png";
 import heroImage2 from "../assets/kurti-product.jpg";
 import heroImage3 from "../assets/jewelry-product.jpg";
 
@@ -13,12 +13,17 @@ interface HeroContent {
 interface HeroProps {
 	onShopNow: () => void;
 	content?: (HeroContent | null)[];
+	resetTrigger: number;
 }
 
 const heroImages = [heroImage, heroImage2, heroImage3];
 
-const Hero: React.FC<HeroProps> = ({ onShopNow, content }) => {
+const Hero: React.FC<HeroProps> = ({ onShopNow, content, resetTrigger }) => {
 	const [current, setCurrent] = useState(0);
+
+	useEffect(() => {
+		setCurrent(0);
+	}, [resetTrigger]);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -83,7 +88,7 @@ const Hero: React.FC<HeroProps> = ({ onShopNow, content }) => {
 						<div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
 							<button onClick={onShopNow} className="btn-boutique group">
 								<span>Shop Collection</span>
-								<ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+								{/* <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" /> */}
 							</button>
 
 							<button className="btn-secondary group">

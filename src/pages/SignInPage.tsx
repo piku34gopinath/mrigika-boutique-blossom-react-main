@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Heart } from "lucide-react";
+import logo from "../assets/logo.jpg";
 
 const SignInPage = () => {
 	const [isSigningUp, setIsSigningUp] = useState(false);
@@ -73,8 +74,8 @@ const SignInPage = () => {
 			<div className="w-full max-w-md p-8 space-y-6 bg-card rounded-2xl shadow-soft">
 				<div className="flex justify-center mb-6">
 					<div className="flex items-center space-x-3 cursor-pointer select-none group">
-						<span className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-br from-primary to-secondary shadow-md group-hover:scale-105 transition-transform">
-							<Heart className="h-9 w-9 text-white" />
+						<span className="inline-flex items-center justify-center h-16 w-16  ">
+						<img src={logo} alt="Mrigika" className="h-9 w-9" />
 						</span>
 						<span className="text-4xl font-extrabold font-playfair gradient-text bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent tracking-wide">
 							Mrigika

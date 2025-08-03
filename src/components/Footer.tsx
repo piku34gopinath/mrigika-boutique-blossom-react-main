@@ -1,5 +1,6 @@
 import React from 'react';
 import { Instagram, Mail, Phone, MapPin, Heart } from 'lucide-react';
+import logo from "../assets/logo.jpg";
 
 const Footer: React.FC = () => {
   return (
@@ -9,7 +10,7 @@ const Footer: React.FC = () => {
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <Heart className="h-6 w-6 text-primary fill-current" />
+            <img src={logo} alt="Mrigika" className="h-5 w-5" />
               <h3 className="text-xl font-playfair font-bold gradient-text">Mrigika</h3>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">

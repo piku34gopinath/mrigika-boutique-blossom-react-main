@@ -4,16 +4,29 @@ import sareeImage2 from '../assets/saree/saree2.jpg';
 import sareeImage3 from '../assets/saree/saree3.jpg';
 import kurtiImage from '../assets/kurti-product.jpg';
 import jewelryImage from '../assets/jewelry-product.jpg';
-import cookiesSaree from '../assets/saree/cookiesSaree1.jpg';
+import cookiesSaree1 from '../assets/saree/cookiesSaree1.jpg';
+import cookiesSaree2 from '../assets/saree/cookiesSaree2.jpg';
+import cookiesSaree3 from '../assets/saree/cookiesSaree3.jpg';
+import swetaSaree1 from '../assets/saree/swetaSaree1.jpg';
+import swetaSaree2 from '../assets/saree/swetaSaree2.jpg';
+import swetaSaree3 from '../assets/saree/swetaSaree3.jpg';
+import sivaniLehega1 from '../assets/saree/sivaniLehega1.jpg';
+import sivaniLehega2 from '../assets/saree/sivaniLehega2.jpg';
+import sivaniLehega3 from '../assets/saree/sivaniLehega3.jpg';
+import prenaSaree1 from '../assets/saree/prenaSaree1.jpg';
+import antaraLehenga1 from '../assets/saree/antaraLehenga1.jpg';
+import antaraLehenga2 from '../assets/saree/antaraLehenga2.jpg';
+import antaraLehenga3 from '../assets/saree/antaraLehenga3.jpg';
+import antaraLehenga4 from '../assets/saree/antaraLehenga4.jpg';
 
 export const products: Product[] = [
   // Saree Section (6 products)
   {
     id: '1',
-    name: 'Odisha Silk Saree',
-    price: 4999,
-    description: 'Handwoven silk saree with traditional Odisha motifs, showcasing the rich heritage of our craftsmen.',
-    image: [cookiesSaree, sareeImage2, sareeImage3],
+    name: 'Patachitra Silk Saree',
+    price: 6999,
+    description: 'Handwoven silk saree with traditional Odisha Patachitra, showcasing the rich heritage of our craftsmen.',
+    image: [cookiesSaree1, cookiesSaree2, cookiesSaree3],
     category: 'sarees',
     sizes: ['Free Size'],
     colors: ['Royal Blue', 'Emerald Green', 'Deep Purple'],
@@ -21,10 +34,10 @@ export const products: Product[] = [
   },
   {
     id: '2',
-    name: 'Sambalpuri Saree',
-    price: 3999,
+    name: 'Patachitra Saree',
+    price: 14999,
     description: 'Vibrant patterns from Odisha looms, featuring the iconic Sambalpuri weaving technique.',
-    image: [sareeImage, sareeImage2, sareeImage3],
+    image: [swetaSaree1, swetaSaree2, swetaSaree3],
     category: 'sarees',
     sizes: ['Free Size'],
     colors: ['Red', 'Orange', 'Yellow'],
@@ -32,10 +45,10 @@ export const products: Product[] = [
   },
   {
     id: '3',
-    name: 'Bomkai Saree',
+    name: 'patachitra painting Silk Saree',
     price: 5999,
     description: 'Intricate handwoven designs with traditional Bomkai patterns from Odisha.',
-    image: [sareeImage, sareeImage2, sareeImage3],
+    image: [prenaSaree1, ],
     category: 'sarees',
     sizes: ['Free Size'],
     colors: ['Maroon', 'Gold', 'Green'],
@@ -74,13 +87,13 @@ export const products: Product[] = [
   // Lehenga Section (6 products)
   {
     id: '7',
-    name: 'Embroidered Lehenga',
+    name: 'Embroidered Sambalpuri Lehenga',
     price: 7999,
     description: 'Floral embroidery with dupatta, perfect for festive celebrations and weddings.',
-    image: [kurtiImage, jewelryImage, sareeImage],
+    image: [sivaniLehega1, sivaniLehega2, sivaniLehega3],
     category: 'lehengas',
     sizes: ['S', 'M', 'L', 'XL'],
-    colors: ['Pink', 'Blue', 'Red'],
+    colors: ['Black'],
     featured: true,
   },
   {
@@ -88,7 +101,7 @@ export const products: Product[] = [
     name: 'Anarkali Lehenga',
     price: 6499,
     description: 'Flowy design for festive occasions with traditional Anarkali silhouette.',
-    image: [kurtiImage, jewelryImage, sareeImage],
+    image: [antaraLehenga1, antaraLehenga2, antaraLehenga3,antaraLehenga4],
     category: 'lehengas',
     sizes: ['S', 'M', 'L', 'XL'],
     colors: ['Purple', 'Teal', 'Magenta'],

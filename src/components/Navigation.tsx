@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ShoppingBag, Menu, X, Instagram, Heart, User } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import logo from "../assets/logo.jpg";
 
 interface NavigationProps {
 	cartItemsCount: number;
@@ -45,8 +46,8 @@ const Navigation: React.FC<NavigationProps> = ({
 				<div className="flex items-center justify-between h-20">
 					{/* Logo */}
 					<Link to="/" className="flex items-center space-x-3 cursor-pointer select-none group">
-						<span className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-primary to-secondary shadow-md group-hover:scale-105 transition-transform">
-							<Heart className="h-7 w-7 text-white" />
+						<span className="inline-flex items-center justify-center h-12 w-12  ">
+							<img src={logo} alt="Mrigika" className="h-7 w-7" />
 						</span>
 						<span className="text-3xl font-extrabold font-playfair gradient-text bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent tracking-wide">
 							Mrigika

@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Hero from "../components/Hero";
 import VideoSection from "../components/VideoSection";
 import ProductCard from "../components/ProductCard";
@@ -26,6 +26,12 @@ const featuredProducts: Product[] = [
 
 const HomePage: React.FC = () => {
 	const navigate = useNavigate();
+	const location = useLocation();
+	const [heroResetTrigger, setHeroResetTrigger] = useState(0);
+
+	useEffect(() => {
+		setHeroResetTrigger(Date.now());
+	}, [location]);
 
 	const features = [
 		{
@@ -118,7 +124,11 @@ const HomePage: React.FC = () => {
 		<div className="min-h-screen">
 			{/* Hero Section */}
 			<div className="fade-in scale-up animate-hero">
-				<Hero onShopNow={() => navigate("/shop")} content={heroContent} />
+				<Hero
+					onShopNow={() => navigate("/shop")}
+					content={heroContent}
+					resetTrigger={heroResetTrigger}
+				/>
 			</div>
 
 			{/* Video Section */}
