@@ -13,19 +13,19 @@ const VideoSection: React.FC = () => {
 		{
 			title: "Odisha Handloom Weaving",
 			description: "Traditional artisans creating beautiful textiles",
-			src: "/src/assets/video/video1.MP4",
+			src: "/video/video1.MP4",
 			objectFit: "object-cover",
 		},
 		{
 			title: "Finished Handloom Products",
 			description: "Showcasing the beauty of completed sarees",
-			src: "/src/assets/video/video3.MP4",
+			src: "/video/video3.MP4",
 			objectFit: "object-cover",
 		},
 		{
 			title: "Finished Handloom Products",
 			description: "Showcasing the beauty of completed sarees",
-			src: "/src/assets/video/video6.MP4",
+			src: "/video/video6.MP4",
 			objectFit: "object-cover",
 		},
 	];
