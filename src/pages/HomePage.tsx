@@ -84,11 +84,41 @@ const HomePage: React.FC = () => {
 		navigate(`/shop?category=${categoryKey}`);
 	};
 
+	const heroContent = [
+		null, // For the first image
+		{
+			tagline: "✨ New Kurtis Collection",
+			title: (
+				<>
+					Comfort
+					<span className="block bg-gradient-to-r from-accent to-primary-glow bg-clip-text text-transparent">
+						in Style
+					</span>
+				</>
+			),
+			subtitle:
+				"Discover our range of elegant and comfortable kurtis, perfect for any occasion.",
+		},
+		{
+			tagline: "✨ Stunning Accessories",
+			title: (
+				<>
+					The Final
+					<span className="block bg-gradient-to-r from-accent to-primary-glow bg-clip-text text-transparent">
+						Touch
+					</span>
+				</>
+			),
+			subtitle:
+				"Complete your look with our exquisite collection of handcrafted jewelry.",
+		},
+	];
+
 	return (
 		<div className="min-h-screen">
 			{/* Hero Section */}
 			<div className="fade-in scale-up animate-hero">
-				<Hero onShopNow={() => navigate("/shop")} />
+				<Hero onShopNow={() => navigate("/shop")} content={heroContent} />
 			</div>
 
 			{/* Video Section */}
@@ -96,28 +126,7 @@ const HomePage: React.FC = () => {
 				<VideoSection />
 			</div>
 
-			{/* Features Section */}
-			<section className="py-16 bg-muted/30 fade-in slide-up">
-				<div className="container mx-auto px-4">
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-						{features.map((feature, index) => (
-							<div
-								key={index}
-								className={`text-center p-6 rounded-2xl bg-card border border-border shadow-soft hover:shadow-elegant transition-all duration-300 fade-in slide-up animate-feature-card`}
-								style={{ animationDelay: `${index * 0.15 + 0.2}s` }}
-							>
-								<div className="flex justify-center mb-4">{feature.icon}</div>
-								<h3 className="font-playfair font-semibold text-lg mb-2 text-primary">
-									{feature.title}
-								</h3>
-								<p className="text-muted-foreground text-sm">
-									{feature.description}
-								</p>
-							</div>
-						))}
-					</div>
-				</div>
-			</section>
+		
 
 			{/* Product Categories Section */}
 			<section className="py-16 fade-in slide-up">
@@ -203,6 +212,29 @@ const HomePage: React.FC = () => {
 				</div>
 			</section>
 
+				{/* Features Section */}
+				<section className="py-16 bg-muted/30 fade-in slide-up">
+				<div className="container mx-auto px-4">
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+						{features.map((feature, index) => (
+							<div
+								key={index}
+								className={`text-center p-6 rounded-2xl bg-card border border-border shadow-soft hover:shadow-elegant transition-all duration-300 fade-in slide-up animate-feature-card`}
+								style={{ animationDelay: `${index * 0.15 + 0.2}s` }}
+							>
+								<div className="flex justify-center mb-4">{feature.icon}</div>
+								<h3 className="font-playfair font-semibold text-lg mb-2 text-primary">
+									{feature.title}
+								</h3>
+								<p className="text-muted-foreground text-sm">
+									{feature.description}
+								</p>
+							</div>
+						))}
+					</div>
+				</div>
+			</section>
+
 			{/* About Section */}
 			<section className="py-16 bg-secondary fade-in slide-up">
 				<div className="container mx-auto px-4">
@@ -227,7 +259,7 @@ const HomePage: React.FC = () => {
 							>
 								Our Story on Instagram
 							</a>
-							<button className="btn-secondary">Visit Our Store</button>
+							<button onClick={() => navigate("/contact")} className="btn-secondary">Visit Our Store</button>
 						</div>
 					</div>
 				</div>

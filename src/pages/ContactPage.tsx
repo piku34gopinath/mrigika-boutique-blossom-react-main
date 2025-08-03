@@ -50,7 +50,7 @@ const ContactPage: React.FC = () => {
 										<div>
 											<h3 className="font-semibold mb-1">Email</h3>
 											<p className="text-muted-foreground">
-												contact@mrigika.com
+											mrigika.studio@gmail.com
 											</p>
 											<p className="text-muted-foreground text-sm">
 												We'll respond within 24 hours
@@ -64,9 +64,9 @@ const ContactPage: React.FC = () => {
 										</div>
 										<div>
 											<h3 className="font-semibold mb-1">Phone</h3>
-											<p className="text-muted-foreground">+91 98765 43210</p>
+											<p className="text-muted-foreground">+91 7008284799</p>
 											<p className="text-muted-foreground text-sm">
-												Monday to Saturday, 10 AM - 7 PM
+												Monday to Saturday, 10 AM - 9 PM
 											</p>
 										</div>
 									</div>
@@ -78,10 +78,10 @@ const ContactPage: React.FC = () => {
 										<div>
 											<h3 className="font-semibold mb-1">Store Address</h3>
 											<p className="text-muted-foreground">
-												Plot No- 426, District Center, Chandrasekharpur
+											Rabitakiz square, Kedar Gouri Vihar, Rajarani Colony,
 											</p>
 											<p className="text-muted-foreground">
-												Bhubaneswar, Odisha 751016
+												Bhubaneswar, Odisha 751002
 											</p>
 										</div>
 									</div>
@@ -119,7 +119,7 @@ const ContactPage: React.FC = () => {
 
 								<div className="space-y-3">
 									<div className="flex justify-between">
-										<span>Monday - Friday</span>
+										<span>Monday - Thursday</span>
 										<span className="text-muted-foreground">
 											10:00 AM - 8:00 PM
 										</span>
@@ -260,9 +260,9 @@ const ContactPage: React.FC = () => {
 											<div className="flex items-start space-x-3">
 												<MapPin className="h-5 w-5 text-primary mt-0.5" />
 												<div>
-													<p className="font-medium">Plot No- 426, District Center, Chandrasekharpur</p>
+													<p className="font-medium">Rabitakiz square, Kedar Gouri Vihar, Rajarani Colony, Rajarani Temple</p>
 													<p className="text-muted-foreground text-sm">
-														Bhubaneswar, Odisha 751016
+														Bhubaneswar, Odisha 751002
 													</p>
 												</div>
 											</div>
@@ -270,7 +270,7 @@ const ContactPage: React.FC = () => {
 											<div className="flex items-start space-x-3">
 												<Phone className="h-5 w-5 text-primary mt-0.5" />
 												<div>
-													<p className="font-medium">+91 98765 43210</p>
+													<p className="font-medium">+91 7008284799</p>
 													<p className="text-muted-foreground text-sm">
 														Call us for directions
 													</p>
@@ -282,10 +282,10 @@ const ContactPage: React.FC = () => {
 									<div>
 										<h4 className="font-semibold mb-3">Getting Here</h4>
 										<div className="space-y-2 text-sm text-muted-foreground">
-											<p>• Nearest Metro: Fashion Street Station (Line 2)</p>
-											<p>• Bus Routes: 123, 456, 789</p>
+											<p>• Rabitakiz square</p>
+											
 											<p>• Parking available on-site</p>
-											<p>• Wheelchair accessible</p>
+											
 										</div>
 									</div>
 

@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
-import heroImage from "../assets/hero-boutique.jpg";
+import heroImage from "../assets/banner/banner1.png";
 import heroImage2 from "../assets/kurti-product.jpg";
 import heroImage3 from "../assets/jewelry-product.jpg";
 
+interface HeroContent {
+	title?: React.ReactNode;
+	subtitle?: string;
+	tagline?: string;
+}
+
 interface HeroProps {
 	onShopNow: () => void;
+	content?: (HeroContent | null)[];
 }
 
 const heroImages = [heroImage, heroImage2, heroImage3];
 
-const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
+const Hero: React.FC<HeroProps> = ({ onShopNow, content }) => {
 	const [current, setCurrent] = useState(0);
 
 	useEffect(() => {
@@ -19,6 +26,8 @@ const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
 		}, 10000); // 10 seconds
 		return () => clearInterval(interval);
 	}, []);
+
+	const currentContent = content?.[current];
 
 	return (
 		<section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
@@ -50,37 +59,40 @@ const Hero: React.FC<HeroProps> = ({ onShopNow }) => {
 			</div>
 
 			{/* Content */}
-			<div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-				<div className="fade-in-up">
-					<span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white/90 text-sm font-medium mb-6">
-						✨ New Collection Available
-					</span>
+			{currentContent && (
+				<div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+					<div className="fade-in-up">
+						{currentContent.tagline && (
+							<span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white/90 text-sm font-medium mb-6">
+								{currentContent.tagline}
+							</span>
+						)}
 
-					<h1 className="text-5xl md:text-7xl font-playfair font-bold text-white mb-6 leading-tight">
-						Elegance
-						<span className="block bg-gradient-to-r from-accent to-primary-glow bg-clip-text text-transparent">
-							Redefined
-						</span>
-					</h1>
+						{currentContent.title && (
+							<h1 className="text-5xl md:text-7xl font-playfair font-bold text-white mb-6 leading-tight">
+								{currentContent.title}
+							</h1>
+						)}
 
-					<p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
-						Discover our curated collection of exquisite sarees, elegant kurtis,
-						and stunning accessories that celebrate your unique style.
-					</p>
+						{currentContent.subtitle && (
+							<p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
+								{currentContent.subtitle}
+							</p>
+						)}
 
-					<div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-						<button onClick={onShopNow} className="btn-boutique group">
-							<span>Shop Collection</span>
-							<ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-						</button>
+						<div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+							<button onClick={onShopNow} className="btn-boutique group">
+								<span>Shop Collection</span>
+								<ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+							</button>
 
-						<button className="btn-secondary group">
-							<span>View Lookbook</span>
-						</button>
+							<button className="btn-secondary group">
+								<span>View Lookbook</span>
+							</button>
+						</div>
 					</div>
 				</div>
-			</div>
-
+			)}
 			{/* Scroll Indicator */}
 			<div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
 				{/* Dots Navigation */}

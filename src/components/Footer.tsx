@@ -56,15 +56,15 @@ const Footer: React.FC = () => {
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-3 text-muted-foreground">
                 <Mail className="h-4 w-4 text-primary" />
-                <span>contact@mrigika.com</span>
+                <span>mrigika.studio@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3 text-muted-foreground">
                 <Phone className="h-4 w-4 text-primary" />
-                <span>+91 98765 43210</span>
+                <span>+91 7008284799</span>
               </div>
               <div className="flex items-start space-x-3 text-muted-foreground">
                 <MapPin className="h-4 w-4 text-primary mt-0.5" />
-                <span>123 Fashion Street, Delhi, India</span>
+                <span>Rabitakiz square,Bhubaneswar, Odisha 751002</span>
               </div>
             </div>
           </div>
@@ -73,7 +73,7 @@ const Footer: React.FC = () => {
         {/* Bottom Section */}
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm">
-            © 2024 Mrigika. All rights reserved.
+            © 2021 Mrigika. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="text-muted-foreground hover:text-primary text-sm transition-colors">
