@@ -35,6 +35,7 @@ import smurtiCostSkert4 from '../assets/saree/smurtiCostSkert4.jpg';
 import antaraRedLehenga1 from '../assets/saree/antaraRedLehenga1.jpg';
 import antaraRedLehenga2 from '../assets/saree/antaraRedLehenga2.jpg';
 import antaraPaintingLehenga from '../assets/saree/antaraPaintingLehenga.jpg';
+// import antaraPaintingLehenga from '../assets/saree/antaraPaintingLehenga.jpg';
 
 import VibingCost from '../assets/saree/VibingCost.jpg';
 import guduSaree from '../assets/saree/guduSaree.jpg';
