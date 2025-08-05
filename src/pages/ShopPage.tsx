@@ -44,8 +44,7 @@ const ShopPage: React.FC = () => {
 
 	const sortOptions = [
 		{ id: "featured", label: "Featured" },
-		{ id: "price-low", label: "Price: Low to High" },
-		{ id: "price-high", label: "Price: High to Low" },
+		{ id: "price-low", label: "Price: Low to High" },		{ id: "price-high", label: "Price: High to Low" },
 		{ id: "name", label: "Name A-Z" },
 	];
 
@@ -98,26 +97,26 @@ const ShopPage: React.FC = () => {
 	}, [products, selectedCategory, priceRange, sortBy]);
 
 	return (
-		<div className="min-h-screen py-8">
-			<div className="container mx-auto px-4">
+		<div className="min-h-screen py-6 sm:py-8"> {/* Adjusted vertical padding */}
+			<div className="container mx-auto px-4 sm:px-6 lg:px-8"> {/* Adjusted horizontal padding */}
 				{/* Header */}
-				<div className="mb-8">
-					<h1 className="text-4xl font-playfair font-bold mb-4">
+				<div className="mb-6 sm:mb-8"> {/* Adjusted margin */}
+					<h1 className="text-3xl sm:text-4xl font-playfair font-bold mb-2 sm:mb-4"> {/* Adjusted font size and margin */}
 						Shop Collection
 					</h1>
-					<p className="text-muted-foreground text-lg">
+					<p className="text-base sm:text-lg text-muted-foreground">
 						Discover our complete range of elegant clothing and accessories
 					</p>
 				</div>
 
 				{/* Category Buttons */}
-				<div className="flex flex-wrap justify-center gap-4 mb-8">
+				<div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-6 sm:mb-8"> {/* Adjusted gap and margin */}
 					{categories.map((category) => (
 						<Button
 							key={category.id}
 							variant={selectedCategory === category.id ? "default" : "outline"}
 							onClick={() => setSelectedCategory(category.id)}
-							className="rounded-full"
+							className="rounded-full text-sm sm:text-base px-3 py-1.5 sm:px-4 sm:py-2" /* Adjusted padding and font size */
 						>
 							{category.label}
 						</Button>
@@ -125,12 +124,12 @@ const ShopPage: React.FC = () => {
 				</div>
 
 				{/* Filters and Sort */}
-				<div className="mb-8">
-					<div className="flex flex-col lg:flex-row gap-4 justify-between items-start lg:items-center">
+				<div className="mb-6 sm:mb-8">
+					<div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center"> {/* Changed lg to md for flex-direction change */}
 						{/* Mobile Filter Toggle */}
 						<button
 							onClick={() => setShowFilters(!showFilters)}
-							className="lg:hidden btn-secondary flex items-center space-x-2"
+							className="md:hidden btn-secondary flex items-center space-x-2 text-sm px-3 py-1.5" /* Adjusted mobile button classes */
 						>
 							<SlidersHorizontal className="h-4 w-4" />
 							<span>Filters</span>
@@ -140,17 +139,17 @@ const ShopPage: React.FC = () => {
 						<div
 							className={`${
 								showFilters ? "block" : "hidden"
-							} lg:flex flex-wrap gap-4 w-full lg:w-auto`}
+							} md:flex flex-wrap gap-4 w-full md:w-auto`} /* Changed lg to md */
 						>
 							{/* Price Filter */}
-							<div className="space-y-2">
+							<div className="space-y-2 w-full sm:w-auto"> {/* Responsive width for filter dropdown */}
 								<label className="text-sm font-medium text-muted-foreground">
 									Price Range
 								</label>
 								<select
 									value={priceRange}
 									onChange={(e) => setPriceRange(e.target.value)}
-									className="px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent"
+									className="px-3 py-1.5 sm:px-4 sm:py-2 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent w-full" /* Responsive padding and full width */
 								>
 									{priceRanges.map((range) => (
 										<option key={range.id} value={range.id}>
@@ -162,14 +161,14 @@ const ShopPage: React.FC = () => {
 						</div>
 
 						{/* Sort */}
-						<div className="space-y-2">
+						<div className="space-y-2 w-full sm:w-auto"> {/* Responsive width for sort dropdown */}
 							<label className="text-sm font-medium text-muted-foreground">
 								Sort By
 							</label>
 							<select
 								value={sortBy}
 								onChange={(e) => setSortBy(e.target.value)}
-								className="px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent"
+								className="px-3 py-1.5 sm:px-4 sm:py-2 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent w-full" /* Responsive padding and full width */
 							>
 								{sortOptions.map((option) => (
 									<option key={option.id} value={option.id}>
@@ -182,7 +181,7 @@ const ShopPage: React.FC = () => {
 				</div>
 
 				{/* Results Count */}
-				<div className="mb-6">
+				<div className="mb-6 text-sm sm:text-base"> {/* Adjusted font size */}
 					<p className="text-muted-foreground">
 						Showing {filteredAndSortedProducts.length} of {products.length}{" "}
 						products
@@ -191,7 +190,7 @@ const ShopPage: React.FC = () => {
 
 				{/* Products Grid */}
 				{filteredAndSortedProducts.length > 0 ? (
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8"> {/* Adjusted grid columns and gap */}
 						{filteredAndSortedProducts.map((product) => (
 							<ProductCard
 								key={product.id}
@@ -200,10 +199,10 @@ const ShopPage: React.FC = () => {
 						))}
 					</div>
 				) : (
-					<div className="text-center py-16">
-						<Filter className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-						<h3 className="text-xl font-semibold mb-2">No products found</h3>
-						<p className="text-muted-foreground mb-6">
+					<div className="text-center py-10 sm:py-16"> {/* Adjusted vertical padding */}
+						<Filter className="h-12 w-12 sm:h-16 sm:w-16 text-muted-foreground mx-auto mb-3 sm:mb-4" /> {/* Adjusted icon size and margin */}
+						<h3 className="text-lg sm:text-xl font-semibold mb-1.5 sm:mb-2">No products found</h3> {/* Adjusted font size and margin */}
+						<p className="text-muted-foreground text-sm sm:text-base mb-4 sm:mb-6"> {/* Adjusted font size and margin */}
 							Try adjusting your filters to see more products
 						</p>
 						<button
@@ -212,7 +211,7 @@ const ShopPage: React.FC = () => {
 								setPriceRange("all");
 								setSortBy("featured");
 							}}
-							className="btn-secondary"
+							className="btn-secondary text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-2.5" /* Adjusted padding and font size */
 						>
 							Clear Filters
 						</button>

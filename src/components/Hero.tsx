@@ -35,7 +35,7 @@ const Hero: React.FC<HeroProps> = ({ onShopNow, content, resetTrigger }) => {
 	const currentContent = content?.[current];
 
 	return (
-		<section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+		<section className="relative min-h-[60vh] md:min-h-[80vh] lg:min-h-[90vh] flex items-center justify-center overflow-hidden py-10 md:py-0"> {/* Responsive height and padding */}
 			{/* Background Images Slider */}
 			<div className="absolute inset-0">
 				{heroImages.map((img, idx) => (
@@ -49,49 +49,48 @@ const Hero: React.FC<HeroProps> = ({ onShopNow, content, resetTrigger }) => {
 						style={{ transitionProperty: "opacity" }}
 					/>
 				))}
-				<div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-transparent" />
+				<div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent" /> {/* Adjusted gradient */}
 			</div>
 
 			{/* Floating Elements */}
-			<div className="absolute top-20 left-10 opacity-20">
-				<Sparkles className="h-8 w-8 text-accent float-animation" />
+			<div className="absolute top-10 left-5 sm:top-20 sm:left-10 opacity-20"> {/* Responsive position */}
+				<Sparkles className="h-6 w-6 sm:h-8 sm:w-8 text-accent float-animation" /> {/* Responsive size */}
 			</div>
-			<div className="absolute bottom-32 right-16 opacity-20">
+			<div className="absolute bottom-10 right-5 sm:bottom-32 sm:right-16 opacity-20"> {/* Responsive position */}
 				<Sparkles
-					className="h-6 w-6 text-primary float-animation"
+					className="h-5 w-5 sm:h-6 sm:w-6 text-primary float-animation" /* Responsive size */
 					style={{ animationDelay: "2s" }}
 				/>
 			</div>
 
 			{/* Content */}
 			{currentContent && (
-				<div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+				<div className="relative z-10 text-center max-w-xl mx-auto px-4 sm:px-6 lg:px-8"> {/* Responsive max-width and padding */}
 					<div className="fade-in-up">
 						{currentContent.tagline && (
-							<span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white/90 text-sm font-medium mb-6">
+							<span className="inline-block px-3 py-1.5 sm:px-4 sm:py-2 bg-white/10 backdrop-blur-md rounded-full text-white/90 text-xs sm:text-sm font-medium mb-4 sm:mb-6"> {/* Responsive padding, font size, margin */}
 								{currentContent.tagline}
 							</span>
 						)}
 
 						{currentContent.title && (
-							<h1 className="text-5xl md:text-7xl font-playfair font-bold text-white mb-6 leading-tight">
+							<h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-playfair font-bold text-white mb-4 sm:mb-6 leading-tight"> {/* Responsive font size, margin */}
 								{currentContent.title}
 							</h1>
 						)}
 
 						{currentContent.subtitle && (
-							<p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
+							<p className="text-base sm:text-lg md:text-xl text-white/90 mb-6 sm:mb-8 max-w-xl mx-auto leading-relaxed"> {/* Responsive font size, margin, max-width */}
 								{currentContent.subtitle}
 							</p>
 						)}
 
-						<div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-							<button onClick={onShopNow} className="btn-boutique group">
+						<div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center"> {/* Responsive gap */}
+							<button onClick={onShopNow} className="btn-boutique group text-sm sm:text-base px-6 py-2.5 sm:px-8 sm:py-3"> {/* Responsive padding and font size */}
 								<span>Shop Collection</span>
-								{/* <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" /> */}
 							</button>
 
-							<button className="btn-secondary group">
+							<button className="btn-secondary group text-sm sm:text-base px-6 py-2.5 sm:px-8 sm:py-3"> {/* Responsive padding and font size */}
 								<span>View Lookbook</span>
 							</button>
 						</div>
@@ -99,20 +98,18 @@ const Hero: React.FC<HeroProps> = ({ onShopNow, content, resetTrigger }) => {
 				</div>
 			)}
 			{/* Scroll Indicator */}
-			<div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
-				{/* Dots Navigation */}
-
+			<div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center"> {/* Responsive bottom position */}
 				<div className="flex flex-col items-center text-white/70">
-					<span className="text-sm mb-2">Scroll to explore</span>
-					<div className="w-px h-8 bg-white/30 animate-pulse" />
+					<span className="text-xs sm:text-sm mb-1 sm:mb-2">Scroll to explore</span> {/* Responsive font size and margin */}
+					<div className="w-px h-6 sm:h-8 bg-white/30 animate-pulse" /> {/* Responsive height */}
 				</div>
-				<div className="flex gap-2 mb-4">
+				<div className="flex gap-1.5 sm:gap-2 mb-2 sm:mb-4"> {/* Responsive gap and margin */}
 					{heroImages.map((_, idx) => (
 						<button
 							key={idx}
 							onClick={() => setCurrent(idx)}
 							aria-label={`Go to slide ${idx + 1}`}
-							className={`w-3 h-3 rounded-full border-2 transition-all duration-300 focus:outline-none
+							className={`w-2.5 h-2.5 sm:w-3 h-3 rounded-full border-2 transition-all duration-300 focus:outline-none
 								${
 									current === idx
 										? "bg-primary border-primary scale-125 shadow-glow"

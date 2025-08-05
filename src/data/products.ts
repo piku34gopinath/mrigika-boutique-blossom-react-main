@@ -135,7 +135,7 @@ export const products: Product[] = [
   // Lehenga Section (6 products)
  
   {
-    id: '7',
+    id: '9',
     name: 'Anarkali Lehenga',
     price: 6499,
     description: 'Flowy design for festive occasions with traditional Anarkali silhouette.',
@@ -145,7 +145,7 @@ export const products: Product[] = [
     colors: ['Purple', 'Teal', 'Magenta'],
   },
   {
-    id: '8',
+    id: '10',
     name: 'Mirror Work Lehenga',
     price: 5499,
     description: 'Traditional Odisha mirror work with intricate handcrafted details.',
@@ -155,7 +155,7 @@ export const products: Product[] = [
     colors: ['Navy Blue', 'Emerald', 'Burgundy'],
   },
   {
-    id: '9',
+    id: '11',
     name: 'Silk Lehenga Set',
     price: 8999,
     description: 'Rich silk with heavy embroidery, perfect for grand celebrations.',
@@ -165,7 +165,7 @@ export const products: Product[] = [
     colors: ['Gold', 'Silver', 'Rose Gold'],
   },
   {
-    id: '10',
+    id: '12',
     name: 'Embroidered Sambalpuri Lehenga',
     price: 7999,
     description: 'Floral embroidery with dupatta, perfect for festive celebrations and weddings.',
@@ -177,7 +177,7 @@ export const products: Product[] = [
   },
 
   {
-    id: '11',
+    id: '13',
     name: 'Cotton Lehenga',
     price: 3999,
     description: 'Casual yet elegant design for comfortable festive wear.',
@@ -187,7 +187,7 @@ export const products: Product[] = [
     colors: ['Yellow', 'Orange', 'Pink'],
   },
   {
-    id: '12',
+    id: '14',
     name: 'Bridal Lehenga',
     price: 9999,
     description: 'Opulent design for weddings with heavy work and premium fabrics.',
@@ -199,7 +199,7 @@ export const products: Product[] = [
 
   // Customized Garments Section (7 products)
   {
-    id: '13',
+    id: '15',
     name: 'Custom Anarkali Suit',
     price: 5999,
     description: 'Tailored to your measurements with personalized embroidery and design.',
@@ -209,7 +209,7 @@ export const products: Product[] = [
     colors: ['As per choice'],
   },
   {
-    id: '14',
+    id: '16',
     name: 'Embroidered Kurti',
     price: 2499,
     description: 'Customized with handwork and embroidery as per your preference.',
@@ -219,7 +219,7 @@ export const products: Product[] = [
     colors: ['As per choice'],
   },
   {
-    id: '15',
+    id: '17',
     name: 'Palazzo Suit',
     price: 4999,
     description: 'Personalized fit and design with matching palazzo and dupatta.',
@@ -229,7 +229,7 @@ export const products: Product[] = [
     colors: ['As per choice'],
   },
   {
-    id: '16',
+    id: '18',
     name: 'Sharara Set',
     price: 5499,
     description: 'Custom embroidery for elegance with traditional Sharara style.',
@@ -239,7 +239,7 @@ export const products: Product[] = [
     colors: ['As per choice'],
   },
   {
-    id: '17',
+    id: '19',
     name: 'Designer Blouse',
     price: 1999,
     description: 'Custom-made blouses for sarees with personalized fitting and design.',
@@ -249,7 +249,7 @@ export const products: Product[] = [
     colors: ['As per choice'],
   },
   {
-    id: '18',
+    id: '20',
     name: 'Gown with Embroidery',
     price: 6999,
     description: 'Customized gowns for special occasions with intricate embroidery work.',
@@ -259,7 +259,7 @@ export const products: Product[] = [
     colors: ['As per choice'],
   },
   {
-    id: '19',
+    id: '21',
     name: 'Handloom Kurta Set',
     price: 3499,
     description: 'Personalized traditional design using authentic Odisha handloom fabrics.',
@@ -271,7 +271,7 @@ export const products: Product[] = [
 
   // Kids Section (6 products)
   {
-    id: '20',
+    id: '22',
     name: 'Kids Lehenga',
     price: 2499,
     description: 'Mini lehenga for festive wear, designed specially for little princesses.',
@@ -281,7 +281,7 @@ export const products: Product[] = [
     colors: ['Pink', 'Purple', 'Red'],
   },
   {
-    id: '21',
+    id: '23',
     name: 'Kids Kurta Set',
     price: 1999,
     description: 'Comfortable cotton kurta set for boys and girls, perfect for festivals.',
@@ -291,7 +291,7 @@ export const products: Product[] = [
     colors: ['Blue', 'Yellow', 'Green'],
   },
   {
-    id: '22',
+    id: '24',
     name: 'Embroidered Frock',
     price: 1799,
     description: 'Cute design for girls with beautiful embroidery and comfortable fit.',
@@ -301,7 +301,7 @@ export const products: Product[] = [
     colors: ['Pink', 'White', 'Lavender'],
   },
   {
-    id: '23',
+    id: '25',
     name: 'Traditional Dhoti Set',
     price: 2299,
     description: 'Festive wear for boys with traditional dhoti and kurta combination.',
@@ -311,7 +311,7 @@ export const products: Product[] = [
     colors: ['Cream', 'White', 'Gold'],
   },
   {
-    id: '24',
+    id: '26',
     name: 'Anarkali Dress',
     price: 2699,
     description: 'Elegant kids Anarkali dress perfect for special occasions and parties.',
@@ -321,7 +321,7 @@ export const products: Product[] = [
     colors: ['Peach', 'Mint Green', 'Baby Pink'],
   },
   {
-    id: '25',
+    id: '27',
     name: 'Cotton Frock',
     price: 1499,
     description: 'Lightweight and playful design for everyday wear and comfort.',

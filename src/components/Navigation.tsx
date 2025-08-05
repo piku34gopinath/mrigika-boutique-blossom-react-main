@@ -42,30 +42,30 @@ const Navigation: React.FC<NavigationProps> = ({
 
 	return (
 		<nav className="sticky top-0 z-50 bg-background/70 backdrop-blur-lg border-b border-border shadow-lg transition-all">
-			<div className="container mx-auto px-6">
-				<div className="flex items-center justify-between h-20">
+			<div className="container mx-auto px-4 sm:px-6 lg:px-8"> {/* Adjusted padding */}
+				<div className="flex items-center justify-between h-16 sm:h-20"> {/* Adjusted height */}
 					{/* Logo */}
-					<Link to="/" className="flex items-center space-x-3 cursor-pointer select-none group">
-						<span className="inline-flex items-center justify-center h-12 w-12  ">
-							<img src={logo} alt="Mrigika" className="h-7 w-7" />
+					<Link to="/" className="flex items-center space-x-2 sm:space-x-3 cursor-pointer select-none group"> {/* Adjusted spacing */}
+						<span className="inline-flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12"> {/* Adjusted size */}
+							<img src={logo} alt="Mrigika" className="h-6 w-6 sm:h-7 sm:w-7" /> {/* Adjusted size */}
 						</span>
-						<span className="text-3xl font-extrabold font-playfair gradient-text bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent tracking-wide">
+						<span className="text-2xl sm:text-3xl font-extrabold font-playfair gradient-text bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent tracking-wide"> {/* Adjusted font size */}
 							Mrigika
 						</span>
 					</Link>
 
 					{/* Desktop Navigation */}
-					<div className="hidden md:flex items-center space-x-10">
+					<div className="hidden md:flex items-center space-x-6 lg:space-x-10"> {/* Adjusted spacing */}
 						{navigationItems.map((item) => (
 							<Link
 								key={item.id}
 								to={item.path}
-								className={`font-medium text-lg px-3 py-1 rounded transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/40 hover:scale-105 hover:shadow-md
+								className={`font-medium text-base lg:text-lg px-3 py-1 rounded transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/40 hover:scale-105 hover:shadow-md
                   ${
-										isCurrentPage(item.path)
-											? "text-primary border-b-2 border-primary bg-primary/10 shadow-lg scale-105"
-											: "text-muted-foreground hover:text-primary hover:bg-primary/5"
-									}
+									isCurrentPage(item.path)
+										? "text-primary border-b-2 border-primary bg-primary/10 shadow-lg scale-105"
+										: "text-muted-foreground hover:text-primary hover:bg-primary/5"
+								}
                 `}
 							>
 								{item.label}
@@ -74,12 +74,12 @@ const Navigation: React.FC<NavigationProps> = ({
 						{showOfferButton && (
 							<Link
 								to="/offers"
-								className={`font-semibold text-lg px-4 py-1 rounded-full bg-gradient-to-r from-primary to-secondary text-white shadow hover:shadow-lg transition-all duration-300 ml-2 hover:scale-105 hover:shadow-xl
+								className={`font-semibold text-base lg:text-lg px-4 py-1 rounded-full bg-gradient-to-r from-primary to-secondary text-white shadow hover:shadow-lg transition-all duration-300 ml-2 hover:scale-105 hover:shadow-xl
                   ${
-										isCurrentPage("/offers")
-											? "ring-2 ring-primary shadow-xl scale-105"
-											: "hover:shadow-primary/25"
-									}
+									isCurrentPage("/offers")
+										? "ring-2 ring-primary shadow-xl scale-105"
+										: "hover:shadow-primary/25"
+								}
                 `}
 							>
 								Offers
@@ -88,14 +88,14 @@ const Navigation: React.FC<NavigationProps> = ({
 					</div>
 
 					{/* Right Section */}
-					<div className="flex items-center space-x-5">
+					<div className="flex items-center space-x-3 sm:space-x-5"> {/* Adjusted spacing */}
 						<a
 							href="https://www.instagram.com/mrigika?igsh=MTAwazc0MTA0N29jbQ=="
 							target="_blank"
 							rel="noopener noreferrer"
 							className="text-muted-foreground hover:text-primary transition-all duration-300 hover:scale-110 hover:rotate-12"
 						>
-							<Instagram className="h-6 w-6" />
+							<Instagram className="h-5 w-5 sm:h-6 sm:w-6" /> {/* Adjusted size */}
 						</a>
 
 						{/* Favorite button */}
@@ -109,9 +109,9 @@ const Navigation: React.FC<NavigationProps> = ({
 								}
               `}
 						>
-							<Heart className="h-6 w-6" />
+							<Heart className="h-5 w-5 sm:h-6 sm:w-6" /> {/* Adjusted size */}
 							{favoritesCount > 0 && (
-								<span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center shadow">
+								<span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center shadow"> {/* Adjusted size */}
 									{favoritesCount}
 								</span>
 							)}
@@ -127,9 +127,9 @@ const Navigation: React.FC<NavigationProps> = ({
 								}
               `}
 						>
-							<ShoppingBag className="h-6 w-6" />
+							<ShoppingBag className="h-5 w-5 sm:h-6 sm:w-6" /> {/* Adjusted size */}
 							{cartItemsCount > 0 && (
-								<span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center shadow">
+								<span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center shadow"> {/* Adjusted size */}
 									{cartItemsCount}
 								</span>
 							)}
@@ -143,7 +143,7 @@ const Navigation: React.FC<NavigationProps> = ({
 									: ""
 							}`}
 						>
-							<User className="h-6 w-6" />
+							<User className="h-5 w-5 sm:h-6 sm:w-6" /> {/* Adjusted size */}
 						</button>
 
 						{/* Mobile menu button */}
@@ -168,12 +168,12 @@ const Navigation: React.FC<NavigationProps> = ({
 								key={item.id}
 								to={item.path}
 								onClick={() => setIsMobileMenuOpen(false)}
-								className={`block w-full text-left py-3 px-6 font-medium text-lg rounded transition-all duration-300 hover:scale-105 hover:shadow-md
+								className={`block w-full text-left py-2 px-4 text-base font-medium rounded transition-all duration-300 hover:scale-[1.02] hover:shadow-md
                   ${
-										isCurrentPage(item.path)
-											? "text-primary bg-primary/10 shadow-lg scale-105"
-											: "text-muted-foreground hover:text-primary hover:bg-primary/5"
-									}
+									isCurrentPage(item.path)
+										? "text-primary bg-primary/10 shadow-lg"
+										: "text-muted-foreground hover:text-primary hover:bg-primary/5"
+								}
                 `}
 							>
 								{item.label}
@@ -183,12 +183,12 @@ const Navigation: React.FC<NavigationProps> = ({
 							<Link
 								to="/offers"
 								onClick={() => setIsMobileMenuOpen(false)}
-								className={`block w-full text-left py-3 px-6 font-semibold text-lg rounded-full bg-gradient-to-r from-primary to-secondary text-white shadow hover:shadow-lg transition-all duration-300 mt-2 hover:scale-105 hover:shadow-xl
+								className={`block w-full text-left py-2 px-4 text-base font-semibold rounded-full bg-gradient-to-r from-primary to-secondary text-white shadow hover:shadow-lg transition-all duration-300 mt-2 hover:scale-[1.02] hover:shadow-xl
                   ${
-										isCurrentPage("/offers")
-											? "ring-2 ring-primary shadow-xl scale-105"
-											: ""
-									}
+									isCurrentPage("/offers")
+										? "ring-2 ring-primary shadow-xl"
+										: ""
+								}
                 `}
 							>
 								Offers
@@ -197,10 +197,10 @@ const Navigation: React.FC<NavigationProps> = ({
 						<Link
 							to="/favorites"
 							onClick={() => setIsMobileMenuOpen(false)}
-							className={`block w-full text-left py-3 px-6 font-medium text-lg rounded transition-all duration-300 hover:scale-105 hover:shadow-md
+							className={`block w-full text-left py-2 px-4 text-base font-medium rounded transition-all duration-300 hover:scale-[1.02] hover:shadow-md
                 ${
 									isCurrentPage("/favorites")
-										? "text-primary bg-primary/10 shadow-lg scale-105"
+										? "text-primary bg-primary/10 shadow-lg"
 										: "text-muted-foreground hover:text-primary hover:bg-primary/5"
 								}
               `}
@@ -210,10 +210,10 @@ const Navigation: React.FC<NavigationProps> = ({
 						<Link
 							to="/cart"
 							onClick={() => setIsMobileMenuOpen(false)}
-							className={`block w-full text-left py-3 px-6 font-medium text-lg rounded transition-all duration-300 hover:scale-105 hover:shadow-md
+							className={`block w-full text-left py-2 px-4 text-base font-medium rounded transition-all duration-300 hover:scale-[1.02] hover:shadow-md
                 ${
 									isCurrentPage("/cart")
-										? "text-primary bg-primary/10 shadow-lg scale-105"
+										? "text-primary bg-primary/10 shadow-lg"
 										: "text-muted-foreground hover:text-primary hover:bg-primary/5"
 								}
               `}
@@ -225,9 +225,9 @@ const Navigation: React.FC<NavigationProps> = ({
 								handleProfileClick();
 								setIsMobileMenuOpen(false);
 							}}
-							className={`block w-full text-left py-3 px-6 font-medium text-lg rounded transition-all duration-300 hover:scale-105 hover:shadow-md ${
+							className={`block w-full text-left py-2 px-4 text-base font-medium rounded transition-all duration-300 hover:scale-[1.02] hover:shadow-md ${
 								isCurrentPage("/profile") || isCurrentPage("/signin")
-									? "text-primary bg-primary/10 shadow-lg scale-105"
+									? "text-primary bg-primary/10 shadow-lg"
 									: "text-muted-foreground hover:text-primary hover:bg-primary/5"
 							}`}
 						>

@@ -117,13 +117,13 @@ Shipping: ${shipping === 0 ? 'Free' : `₹${shipping}`}
 
     if (cartItems.length === 0) {
         return (
-            <div className="min-h-screen flex flex-col items-center justify-center text-center">
-                <ShoppingCart className="h-16 w-16 text-primary mb-4" />
-                <h1 className="text-3xl font-playfair font-bold mb-2">Your Cart is Empty</h1>
-                <p className="text-muted-foreground mb-6">Looks like you haven't added anything to your cart yet.</p>
+            <div className="min-h-screen flex flex-col items-center justify-center text-center py-8 sm:py-16"> {/* Responsive padding */}
+                <ShoppingCart className="h-12 w-12 sm:h-16 sm:w-16 text-primary mb-3 sm:mb-4" /> {/* Responsive icon size and margin */}
+                <h1 className="text-2xl sm:text-3xl font-playfair font-bold mb-2 sm:mb-2">Your Cart is Empty</h1> {/* Responsive font size and margin */}
+                <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6">Looks like you haven't added anything to your cart yet.</p> {/* Responsive font size and margin */}
                 <button
                     onClick={() => navigate('/shop')}
-                    className="btn-boutique flex items-center justify-center space-x-2"
+                    className="btn-boutique flex items-center justify-center space-x-2 text-sm sm:text-base px-5 py-2 sm:px-6 sm:py-2.5" /* Responsive padding and font size */
                 >
                     <span>Continue Shopping</span>
                 </button>
@@ -131,123 +131,123 @@ Shipping: ${shipping === 0 ? 'Free' : `₹${shipping}`}
         );
     }
     return (
-        <div className="min-h-screen py-8">
-            <div className="container mx-auto px-4">
+        <div className="min-h-screen py-6 sm:py-8"> {/* Responsive vertical padding */}
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8"> {/* Responsive horizontal padding */}
                 <div className="max-w-6xl mx-auto">
-                    <h1 className="text-4xl font-playfair font-bold mb-8">Checkout</h1>
+                    <h1 className="text-3xl sm:text-4xl font-playfair font-bold mb-6 sm:mb-8">Checkout</h1> {/* Responsive font size and margin */}
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8"> {/* Responsive grid gap */}
                         {/* Shipping Information */}
                         <div className="space-y-6">
-                            <div className="bg-card border border-border rounded-2xl p-6 shadow-soft">
-                                <div className="flex items-center space-x-3 mb-6">
-                                    <Truck className="h-6 w-6 text-primary" />
-                                    <h2 className="text-xl font-playfair font-semibold">Shipping Information</h2>
+                            <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 shadow-soft"> {/* Responsive padding */}
+                                <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6"> {/* Responsive spacing and margin */}
+                                    <Truck className="h-5 w-5 sm:h-6 sm:w-6 text-primary" /> {/* Responsive icon size */}
+                                    <h2 className="text-lg sm:text-xl font-playfair font-semibold">Shipping Information</h2> {/* Responsive font size */}
                                 </div>
-                                <div className="space-y-4">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="space-y-3 sm:space-y-4"> {/* Responsive spacing */}
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4"> {/* Responsive grid gap */}
                                         <div>
-                                            <label className="block text-sm font-medium mb-2">Full Name *</label>
+                                            <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2">Full Name *</label> {/* Responsive font size and margin */}
                                             <input
                                                 type="text"
                                                 value={customer.name}
                                                 onChange={(e) => handleInputChange('name', e.target.value)}
-                                                className={`w-full px-4 py-3 border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${errors.name ? 'border-destructive' : 'border-border'
-                                                    }`}
+                                                className={`w-full px-3 py-2 sm:px-4 sm:py-3 border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent transition-colors text-sm sm:text-base ${errors.name ? 'border-destructive' : 'border-border'
+                                                    }`} /* Responsive padding and font size */
                                                 placeholder="Enter your full name"
                                             />
-                                            {errors.name && <p className="text-destructive text-sm mt-1">{errors.name}</p>}
+                                            {errors.name && <p className="text-destructive text-xs sm:text-sm mt-1">{errors.name}</p>} {/* Responsive font size */}
                                         </div>
 
                                         <div>
-                                            <label className="block text-sm font-medium mb-2">Email Address *</label>
+                                            <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2">Email Address *</label> {/* Responsive font size and margin */}
                                             <input
                                                 type="email"
                                                 value={customer.email}
                                                 onChange={(e) => handleInputChange('email', e.target.value)}
-                                                className={`w-full px-4 py-3 border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${errors.email ? 'border-destructive' : 'border-border'
-                                                    }`}
+                                                className={`w-full px-3 py-2 sm:px-4 sm:py-3 border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent transition-colors text-sm sm:text-base ${errors.email ? 'border-destructive' : 'border-border'
+                                                    }`} /* Responsive padding and font size */
                                                 placeholder="Enter your email"
                                             />
-                                            {errors.email && <p className="text-destructive text-sm mt-1">{errors.email}</p>}
+                                            {errors.email && <p className="text-destructive text-xs sm:text-sm mt-1">{errors.email}</p>} {/* Responsive font size */}
                                         </div>
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium mb-2">Phone Number *</label>
+                                        <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2">Phone Number *</label> {/* Responsive font size and margin */}
                                         <input
                                             type="tel"
                                             value={customer.phone}
                                             onChange={(e) => handleInputChange('phone', e.target.value)}
-                                            className={`w-full px-4 py-3 border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${errors.phone ? 'border-destructive' : 'border-border'
-                                                }`}
+                                            className={`w-full px-3 py-2 sm:px-4 sm:py-3 border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent transition-colors text-sm sm:text-base ${errors.phone ? 'border-destructive' : 'border-border'
+                                                }`} /* Responsive padding and font size */
                                             placeholder="Enter your phone number"
                                         />
-                                        {errors.phone && <p className="text-destructive text-sm mt-1">{errors.phone}</p>}
+                                        {errors.phone && <p className="text-destructive text-xs sm:text-sm mt-1">{errors.phone}</p>} {/* Responsive font size */}
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium mb-2">Address *</label>
+                                        <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2">Address *</label> {/* Responsive font size and margin */}
                                         <textarea
                                             value={customer.address}
                                             onChange={(e) => handleInputChange('address', e.target.value)}
-                                            className={`w-full px-4 py-3 border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent transition-colors resize-none ${errors.address ? 'border-destructive' : 'border-border'
-                                                }`}
+                                            className={`w-full px-3 py-2 sm:px-4 sm:py-3 border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent transition-colors resize-none text-sm sm:text-base ${errors.address ? 'border-destructive' : 'border-border'
+                                                }`} /* Responsive padding and font size */
                                             rows={3}
                                             placeholder="Enter your complete address"
                                         />
-                                        {errors.address && <p className="text-destructive text-sm mt-1">{errors.address}</p>}
+                                        {errors.address && <p className="text-destructive text-xs sm:text-sm mt-1">{errors.address}</p>} {/* Responsive font size */}
                                     </div>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4"> {/* Responsive grid gap */}
                                         <div>
-                                            <label className="block text-sm font-medium mb-2">City *</label>
+                                            <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2">City *</label> {/* Responsive font size and margin */}
                                             <input
                                                 type="text"
                                                 value={customer.city}
                                                 onChange={(e) => handleInputChange('city', e.target.value)}
-                                                className={`w-full px-4 py-3 border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${errors.city ? 'border-destructive' : 'border-border'
-                                                    }`}
+                                                className={`w-full px-3 py-2 sm:px-4 sm:py-3 border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent transition-colors text-sm sm:text-base ${errors.city ? 'border-destructive' : 'border-border'
+                                                    }`} /* Responsive padding and font size */
                                                 placeholder="Enter your city"
                                             />
-                                            {errors.city && <p className="text-destructive text-sm mt-1">{errors.city}</p>}
+                                            {errors.city && <p className="text-destructive text-xs sm:text-sm mt-1">{errors.city}</p>} {/* Responsive font size */}
                                         </div>
 
                                         <div>
-                                            <label className="block text-sm font-medium mb-2">Pincode *</label>
+                                            <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2">Pincode *</label> {/* Responsive font size and margin */}
                                             <input
                                                 type="text"
                                                 value={customer.pincode}
                                                 onChange={(e) => handleInputChange('pincode', e.target.value)}
-                                                className={`w-full px-4 py-3 border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${errors.pincode ? 'border-destructive' : 'border-border'
-                                                    }`}
+                                                className={`w-full px-3 py-2 sm:px-4 sm:py-3 border rounded-lg bg-background focus:ring-2 focus:ring-primary focus:border-transparent transition-colors text-sm sm:text-base ${errors.pincode ? 'border-destructive' : 'border-border'
+                                                    }`} /* Responsive padding and font size */
                                                 placeholder="Enter pincode"
                                             />
-                                            {errors.pincode && <p className="text-destructive text-sm mt-1">{errors.pincode}</p>}
+                                            {errors.pincode && <p className="text-destructive text-xs sm:text-sm mt-1">{errors.pincode}</p>} {/* Responsive font size */}
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Payment Method */}
-                            <div className="bg-card border border-border rounded-2xl p-6 shadow-soft">
-                                <div className="flex items-center space-x-3 mb-6">
-                                    <CreditCard className="h-6 w-6 text-primary" />
-                                    <h2 className="text-xl font-playfair font-semibold">Payment Method</h2>
+                            <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 shadow-soft"> {/* Responsive padding */}
+                                <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6"> {/* Responsive spacing and margin */}
+                                    <CreditCard className="h-5 w-5 sm:h-6 sm:w-6 text-primary" /> {/* Responsive icon size */}
+                                    <h2 className="text-lg sm:text-xl font-playfair font-semibold">Payment Method</h2> {/* Responsive font size */}
                                 </div>
-                                <div className="space-y-4">
-                                    <div className="border border-border rounded-lg p-4">
-                                        <div className="flex items-center space-x-3">
+                                <div className="space-y-3 sm:space-y-4"> {/* Responsive spacing */}
+                                    <div className="border border-border rounded-lg p-3 sm:p-4"> {/* Responsive padding */}
+                                        <div className="flex items-center space-x-2 sm:space-x-3">
                                             <input
                                                 type="radio"
                                                 id="cod"
                                                 name="payment"
                                                 defaultChecked
-                                                className="w-4 h-4 text-primary"
+                                                className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary"
                                             />
-                                            <label htmlFor="cod" className="font-medium">Cash on Delivery</label>
+                                            <label htmlFor="cod" className="font-medium text-sm sm:text-base">Cash on Delivery</label> {/* Responsive font size */}
                                         </div>
-                                        <p className="text-muted-foreground text-sm mt-2 ml-7">
+                                        <p className="text-muted-foreground text-xs sm:text-sm mt-1.5 ml-6 sm:ml-7">
                                             Pay when your order is delivered to your doorstep
                                         </p>
                                     </div>
@@ -257,36 +257,36 @@ Shipping: ${shipping === 0 ? 'Free' : `₹${shipping}`}
 
                         {/* Order Summary */}
                         <div className="space-y-6">
-                            <div className="bg-card border border-border rounded-2xl p-6 shadow-soft sticky top-8">
-                                <h2 className="text-xl font-playfair font-semibold mb-6">Order Summary</h2>
+                            <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 shadow-soft sticky top-8 lg:top-24"> {/* Responsive padding and sticky top */}
+                                <h2 className="text-lg sm:text-xl font-playfair font-semibold mb-4 sm:mb-6">Order Summary</h2> {/* Responsive font size and margin */}
 
                                 {/* Order Items */}
-                                <div className="space-y-4 mb-6">
+                                <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6"> {/* Responsive spacing and margin */}
                                     {cartItems.map((item) => (
-                                        <div key={item.id} className="flex items-center space-x-4">
+                                        <div key={item.id} className="flex items-center space-x-3 sm:space-x-4">
                                             <img
                                                 src={item.image[0]}
                                                 alt={item.name}
-                                                className="w-20 h-20 object-cover rounded-lg"
+                                                className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg" /* Responsive image size */
                                             />
                                             <div className="flex-grow">
-                                                <h4 className="font-medium">{item.name}</h4>
-                                                <div className="flex items-center space-x-2 mt-1">
+                                                <h4 className="font-medium text-sm sm:text-base">{item.name}</h4> {/* Responsive font size */}
+                                                <div className="flex items-center space-x-1.5 sm:space-x-2 mt-1">
                                                     <button onClick={() => updateCartQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1} className="p-1 rounded-full bg-secondary hover:bg-secondary/80">
-                                                        <Minus className="h-4 w-4" />
+                                                        <Minus className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                                                     </button>
-                                                    <span>{item.quantity}</span>
+                                                    <span className="text-sm sm:text-base">{item.quantity}</span>
                                                     <button onClick={() => updateCartQuantity(item.id, item.quantity + 1)} className="p-1 rounded-full bg-secondary hover:bg-secondary/80">
-                                                        <Plus className="h-4 w-4" />
+                                                        <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                                                     </button>
                                                 </div>
                                             </div>
                                             <div className="text-right">
-                                                <span className="font-semibold">
+                                                <span className="font-semibold text-sm sm:text-base">
                                                     ₹{(item.price * item.quantity).toLocaleString()}
                                                 </span>
                                                 <button onClick={() => removeFromCart(item.id)} className="text-destructive hover:text-destructive/80 mt-1">
-                                                    <Trash2 className="h-4 w-4" />
+                                                    <Trash2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                                                 </button>
                                             </div>
                                         </div>
@@ -294,22 +294,22 @@ Shipping: ${shipping === 0 ? 'Free' : `₹${shipping}`}
                                 </div>
 
                                 {/* Coupon Code */}
-                                <div className="flex space-x-2 mb-6">
+                                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-4 sm:mb-6"> {/* Responsive layout and spacing */}
                                     <input
                                         type="text"
                                         value={couponCode}
                                         onChange={(e) => setCouponCode(e.target.value)}
                                         placeholder="Enter coupon code"
-                                        className="w-full px-4 py-2 border rounded-lg bg-background focus:ring-2 focus:ring-primary"
+                                        className="w-full px-3 py-2 border rounded-lg bg-background focus:ring-2 focus:ring-primary text-sm sm:text-base" /* Responsive padding and font size */
                                     />
-                                    <button onClick={handleApplyCoupon} className="btn-boutique flex items-center space-x-2">
-                                        <Tag className="h-5 w-5" />
+                                    <button onClick={handleApplyCoupon} className="btn-boutique flex items-center justify-center space-x-2 text-sm sm:text-base px-4 py-2 sm:px-5 sm:py-2.5"> {/* Responsive padding and font size */}
+                                        <Tag className="h-4 w-4 sm:h-5 sm:w-5" />
                                         <span>Apply</span>
                                     </button>
                                 </div>
 
                                 {/* Pricing */}
-                                <div className="space-y-3 border-t border-border pt-6">
+                                <div className="space-y-2 sm:space-y-3 border-t border-border pt-4 sm:pt-6 text-sm sm:text-base"> {/* Responsive spacing, padding, and font size */}
                                     <div className="flex justify-between">
                                         <span>Subtotal</span>
                                         <span>₹{total.toLocaleString()}</span>
@@ -326,8 +326,8 @@ Shipping: ${shipping === 0 ? 'Free' : `₹${shipping}`}
                                             {shipping === 0 ? 'Free' : `₹${shipping}`}
                                         </span>
                                     </div>
-                                    <div className="border-t border-border pt-3">
-                                        <div className="flex justify-between text-lg font-semibold">
+                                    <div className="border-t border-border pt-3 sm:pt-4">
+                                        <div className="flex justify-between text-base sm:text-lg font-semibold">
                                             <span>Total</span>
                                             <span>₹{finalTotal.toLocaleString()}</span>
                                         </div>
@@ -337,12 +337,12 @@ Shipping: ${shipping === 0 ? 'Free' : `₹${shipping}`}
                                 {/* Place Order Button */}
                                 <button
                                     onClick={handleSubmit}
-                                    className="btn-boutique w-full mt-6 flex items-center justify-center space-x-2"
+                                    className="btn-boutique w-full mt-4 sm:mt-6 flex items-center justify-center space-x-2 text-sm sm:text-base px-5 py-2 sm:px-auto sm:py-auto" /* Responsive margin, padding and font size */
                                 >
-                                    <CheckCircle className="h-5 w-5" />
+                                    <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5" />
                                     <span>Place Order</span>
                                 </button>
-                                <p className="text-muted-foreground text-xs text-center mt-4">
+                                <p className="text-muted-foreground text-xs text-center mt-3 sm:mt-4">
                                     By placing your order, you agree to our Terms of Service and Privacy Policy
                                 </p>
                             </div>
